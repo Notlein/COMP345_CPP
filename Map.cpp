@@ -47,7 +47,7 @@ Map::Map(vector<vector<string>> parsedFile){
 		// for(int k=0;k<list_t.size()-1;k++){
 		// 	cout  << list_t.at(k);
 		// }
-		// cout << endl;
+		cout << endl;
 		Continent c(n,p,new vector(list_t));
 		
 

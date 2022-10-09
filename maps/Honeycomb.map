@@ -34,6 +34,7 @@ Territory16,436,234,Upper Left,Territory12,Territory11,Territory15,Territory19,T
 Territory17,470,253,Upper Left,Territory16,Territory13,Territory19,Territory59,Territory60,Territory18
 Territory18,503,234,Upper Left,Territory13,Territory10,Territory17,Territory60,Territory22,Territory21
 Territory19,438,277,Upper Left,Territory15,Territory16,Territory50,Territory58,Territory17,Territory59
+
 Territory20,541,170,Upper Right,Territory05,Territory10,Territory23,Territory24,Territory21
 Territory21,542,212,Upper Right,Territory10,Territory18,Territory20,Territory24,Territory25,Territory22
 Territory22,540,254,Upper Right,Territory18,Territory60,Territory64,Territory21,Territory25,Territory26
@@ -53,6 +54,7 @@ Territory35,634,273,Upper Right,Territory30,Territory31,Territory34,Territory78,
 Territory36,666,171,Upper Right,Territory32,Territory33,Territory37
 Territory37,666,212,Upper Right,Territory33,Territory34,Territory36,Territory38
 Territory38,666,254,Upper Right,Territory34,Territory37,Territory79,Territory35
+
 Territory39,278,304,Left,Territory40,Territory42,Territory43
 Territory40,309,283,Left,Territory41,Territory39,Territory43,Territory44
 Territory41,339,264,Left,Territory14,Territory40,Territory44,Territory45
@@ -72,6 +74,7 @@ Territory54,404,348,Left,Territory50,Territory49,Territory53,Territory57,Territo
 Territory55,340,428,Left,Territory51,Territory52,Territory56,Territory97,Territory96
 Territory56,372,408,Left,Territory53,Territory57,Territory55,Territory97,Territory98,Territory52
 Territory57,402,388,Left,Territory54,Territory53,Territory56,Territory98,Territory65,Territory61
+
 Territory58,444,324,Center,Territory19,Territory50,Territory54,Territory61,Territory62,Territory59
 Territory59,473,302,Center,Territory19,Territory17,Territory58,Territory62,Territory63,Territory60
 Territory60,507,281,Center,Territory17,Territory18,Territory59,Territory63,Territory64,Territory22
@@ -91,6 +94,7 @@ Territory73,567,365,Center,Territory68,Territory69,Territory72,Territory76,Terri
 Territory74,505,448,Center,Territory70,Territory71,Territory107,Territory115,Territory116,Territory75
 Territory75,536,428,Center,Territory71,Territory72,Territory116,Territory74,Territory76,Territory117
 Territory76,570,408,Center,Territory72,Territory73,Territory75,Territory117,Territory84,Territory80
+
 Territory77,609,346,Right,Territory69,Territory73,Territory31,Territory78,Territory80,Territory81
 Territory78,640,322,Right,Territory31,Territory35,Territory79,Territory77,Territory81,Territory82
 Territory79,674,304,Right,Territory35,Territory38,Territory78,Territory82,Territory83
@@ -110,6 +114,7 @@ Territory92,734,388,Right,Territory88,Territory87,Territory95,Territory91
 Territory93,670,469,Right,Territory90,Territory89,Territory94,Territory126
 Territory94,702,449,Right,Territory91,Territory90,Territory95,Territory93
 Territory95,734,428,Right,Territory92,Territory91,Territory94
+
 Territory96,345,477,Lower Left,Territory55,Territory97,Territory100,Territory99
 Territory97,376,458,Lower Left,Territory55,Territory56,Territory96,Territory100,Territory98,Territory101
 Territory98,409,436,Lower Left,Territory57,Territory56,Territory65,Territory97,Territory101,Territory102
@@ -129,6 +134,7 @@ Territory111,473,519,Lower Left,Territory110,Territory106,Territory107,Territory
 Territory112,409,601,Lower Left,Territory108,Territory109,Territory113
 Territory113,438,584,Lower Left,Territory109,Territory112,Territory114,Territory110
 Territory114,471,560,Lower Left,Territory113,Territory110,Territory111,Territory118,Territory122
+
 Territory115,509,498,Lower Right,Territory74,Territory107,Territory111,Territory118,Territory119,Territory116
 Territory116,542,474,Lower Right,Territory74,Territory75,Territory115,Territory119,Territory120,Territory117
 Territory117,574,456,Lower Right,Territory75,Territory76,Territory84,Territory116,Territory120,Territory121
