@@ -116,38 +116,45 @@ stringList.push_back("./maps/Grand Montreal.map");
 stringList.push_back("./maps/Quebec.map");
 stringList.push_back("./maps/Honeycomb.map");
 // iterable
+
 for (string x : stringList){
     ifstream file(x);
     vector<vector<string>> v = parseMap(file);
 
-    
-   Map m(v);
+    try
+{
+    Map m(v);
    x = x.substr(7,x.length());
    x = x.substr(0,x.length()-4);
     m.mapName = new string(x);
-   for (int i=0;i<m.continents->size();i++){
-    string* s = new string(*m.continents->at(i).Cname);
-    int* s1 = new int(*m.continents->at(i).nbPts);
-    cout << "Continent name is : " << *s <<endl << "Number of points : " << *s1 <<endl << "Territories are : ";
-    
-    
-    cout << *m.continents->at(i).territories->at(0).Tname;
-    for (int j=1;j<m.continents->at(i).territories->size();j++){
-        
-        cout << ", "<<  *m.continents->at(i).territories->at(j).Tname;
+
+    // Uncomment below to show Continent name, number of points and territories.
+    //
+    // for (int i=0;i<m.continents->size();i++){
+    // string* s = new string(*m.continents->at(i).Cname);
+    // int* s1 = new int(*m.continents->at(i).nbPts);
+    // cout << "Continent name is : " << *s <<endl << "Number of points : " << *s1 << endl << "Territories are : ";
+    // cout << *m.continents->at(i).territories->at(0).Tname;
+    // for (int j=1;j<m.continents->at(i).territories->size();j++){
+    //     cout << ", "<<  *m.continents->at(i).territories->at(j).Tname;
+    // }
+    //     cout << "." << endl << endl;
+//    }
+
+    if(m.getNbContinents() < 1){
+        std::cerr  << endl << "********************\n" << x << endl << "********************\n" << "There is a problem in the map syntax : Please verify the .map file" << endl;
+    } else {
+        std::cout << "Succesful map created" << endl << "********************\n" << x << endl << "********************" << endl;
+        cout << m << endl;  
     }
-        cout << "." << endl << endl;
-
-    
-   }
-
-    cout << m << endl;
-    
     m.~Map();
+}
+catch(const std::exception& e)
+{
+    std::cerr << "INVALID MAP FILE" << endl << "********************\n" << x << endl << "********************" << endl;
+}
     }
-
     return 0;
-
 }
 
 int main(){
