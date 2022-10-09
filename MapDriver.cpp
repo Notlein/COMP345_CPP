@@ -1,5 +1,5 @@
 #include "Map.h"
-// #include "Map.cpp"
+#include "Map.cpp"
 #include <fstream>
 #include <iostream>
 #include <fstream>
@@ -122,7 +122,9 @@ for (string x : stringList){
 
     
    Map m(v);
-    
+   x = x.substr(7,x.length());
+   x = x.substr(0,x.length()-4);
+    m.mapName = new string(x);
    for (int i=0;i<m.continents->size();i++){
     string* s = new string(*m.continents->at(i).Cname);
     int* s1 = new int(*m.continents->at(i).nbPts);
@@ -134,7 +136,7 @@ for (string x : stringList){
         
         cout << ", "<<  *m.continents->at(i).territories->at(j).Tname;
     }
-        cout << "." << endl<< endl;
+        cout << "." << endl << endl;
 
     
    }

@@ -22,7 +22,7 @@ Map::Map(int* nbT, int* nbC, string* mapN) : mapName(mapN)
 
 Map::Map(vector<vector<string>> parsedFile){
 
-	this->mapName = new string("Custom");
+	
 
 	
 
@@ -47,7 +47,7 @@ Map::Map(vector<vector<string>> parsedFile){
 		// for(int k=0;k<list_t.size()-1;k++){
 		// 	cout  << list_t.at(k);
 		// }
-		cout << endl;
+		
 		Continent c(n,p,new vector(list_t));
 		
 
@@ -121,7 +121,7 @@ Map::Territory::Territory(string* name, string* properties) {
 	for(int i = 0; i<3;i++){
 		s = new string(s->substr(s->find(',')+1,s->size()));
 	}
-	s = new string(s->substr(1,s->size()));
+	s = new string(s->substr(0,s->size()));
 	
 
 	istringstream ss(*s);
@@ -133,9 +133,7 @@ Map::Territory::Territory(string* name, string* properties) {
 		substr = substr.substr(1, substr.size());
 	}
     adjT.push_back( substr );
-	
 }
-
 	nbArmies=a;
 	owner=o;
 	Tname = Tn;
