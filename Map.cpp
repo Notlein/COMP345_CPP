@@ -97,6 +97,26 @@ int Map::getNbContinents(){
 	return *nbContinents;
 }
 
+
+bool Map::validate(){
+	for(int i=0; i<continents->size();i++){
+		vector<Territory> v = *continents->at(i).territories;
+		cout << "Continent : "<< *continents->at(i).Cname << endl<<endl;
+		for(int j=0; j<v.size();j++){
+			vector<string> v2 = *v.at(j).adjTerr;
+				cout << "Territory : " << *v.at(j).Tname <<endl <<endl << "Adjacent Territories : "<< endl;
+			for(int k=0;k<v2.size();k++){
+				string v3 = v2.at(k);
+				cout << v3 <<endl;
+			}
+			cout <<endl;
+		}
+		cout <<endl;
+	}
+	cout <<endl;
+
+	return true;	
+}
 // }
 /// <summary>
 /// Territory inner class constructor

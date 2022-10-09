@@ -104,6 +104,7 @@ public:
 
 	/*Continent getContinent(Continent continent) const;*/
 	int getNbContinents();
+	bool validate();
 	Continent getContinent(int* index);
 	// void setMapName(string* input) {};
 	/*vector<string> getTerritories(Continent continent) const; */

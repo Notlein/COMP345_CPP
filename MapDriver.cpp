@@ -141,12 +141,19 @@ for (string x : stringList){
     //     cout << "." << endl << endl;
 //    }
 
+    bool val = m.validate();
+
     if(m.getNbContinents() < 1){
         std::cerr  << endl << "********************\n" << x << endl << "********************\n" << "There is a problem in the map syntax : Please verify the .map file" << endl;
+    } else if (!val){
+        std::cerr  << endl << "********************\n" << x << endl << "********************\n" << "There is a problem in the map. It's not a proper connected graph." << endl;
+
     } else {
         std::cout << "Succesful map created" << endl << "********************\n" << x << endl << "********************" << endl;
         cout << m << endl;  
     }
+
+
     m.~Map();
 }
 catch(const std::exception& e)
