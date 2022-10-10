@@ -117,6 +117,7 @@ bool status=true;
 			for(int m=j+1;m<v.size();m++){
 				
 				string b = *v.at(m).Tname;
+				// if there's a duplicate 
 				if(a == b){
 					status=false;
 				}
@@ -128,7 +129,6 @@ bool status=true;
 					string d = *continents->at(n).territories->at(k).Tname;
 					//  if there's a duplicate
 					if(a == d){
-						// cout << a << " : " << d << endl;
 					status=false;
 					
 					}
@@ -181,13 +181,54 @@ bool status=true;
 		}
 		
 	}
-
-
-	// third function for connected graph validation to do
-			// if(counter2 != 1){
+			Continent cc;
+			vector<Territory> new_vt;
+			for(int i=0;i<continents->size();i++){
+				for(int j=0;j<continents->at(i).territories->size();j++){
+					new_vt.push_back(continents->at(i).territories->at(j));
+				}
+			}
+			*cc.territories = new_vt;
+			// Nodes are unvisited
+			vector<bool> visited2(cc.territories->size(),false);
+			int counter2 = 0;
+			for(int l=0;l<cc.territories->size();l++){
 				
-			// 	status=false;
-			// }	
+				//if not visited, new component
+				if ( !visited2[l] ) { // Process the component that contains v.
+					counter2++;
+					
+					queue<Territory> q; // For implementing a breadth-first traversal.
+					q.push(cc.territories->at(l)); // Start the traversal from vertex v.
+					visited2[l] = true;
+					while ( !q.empty() ) {
+						Territory w = q.front();// w is a node in this component.
+						q.pop(); 
+						// cout << w << " ";
+						// each edge from w to some vertex z
+						for(string z : *w.adjTerr )  {
+							for(int y=0;y<cc.territories->size();y++){
+								string nameT = *cc.territories->at(y).Tname;
+								int connection2 = 0;
+								if(nameT == z){
+									connection2 = y;
+								}
+								
+								if ( !visited2[connection2] ) {
+								// We’ve found another node in this component.
+								visited2[connection2] = true;
+								q.push(cc.territories->at(connection2));
+								}
+							}
+						}
+					}
+				}
+			}
+			if(counter2 != 1){
+				
+				status=false;
+			}	
+		
 
 	return status;	
 }
