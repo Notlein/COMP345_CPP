@@ -208,18 +208,18 @@ bool status=true;
 // Player to implement (class not working)
 Map::Territory::Territory() {
 	int* a = new int(0);
-	Player *o;
+	string* o = new string("not owned");
 	string* Tn = new string("");
 	vector<string>* adjT = new vector<string>;
 	nbArmies=a;
-	owner= o;
+	owner=o;
 	Tname = Tn;
 	adjTerr=adjT;
 };
 
 Map::Territory::Territory(string* name, string* properties) {
 	int* a = new int(0);
-	Player *o;
+	string* o = new string("not owned");
 	string* Tn = new string(*name);
 	vector<string> adjT;
 	string* s = new string(*properties);
@@ -247,10 +247,9 @@ Map::Territory::Territory(string* name, string* properties) {
 };
 // copy constructor
 Map::Territory::Territory(const Territory& territory) {
-	this->nbArmies = new int(*(territory.nbArmies));
-
-	this->owner = territory.owner;
-	this->Tname = new string(*(territory.Tname));
+	this -> nbArmies = new int(*(territory.nbArmies));
+	this -> owner = new string(*(territory.owner));
+	this -> Tname = new string(*(territory.Tname));
 	this->adjTerr = new vector<string>(*(territory.adjTerr));
 	
 };
@@ -258,7 +257,7 @@ Map::Territory::Territory(const Territory& territory) {
 // assignment operator
 Map::Territory& Map::Territory::operator=(const Map::Territory& territory) {
 	this->nbArmies = new int(*(territory.nbArmies));
-	this->owner = territory.owner;
+	this->owner = new string(*(territory.owner));
 	this->Tname = new string(*(territory.Tname));
 	this->adjTerr = new vector<string>(*(territory.adjTerr));
 	return *this;
@@ -266,12 +265,13 @@ Map::Territory& Map::Territory::operator=(const Map::Territory& territory) {
 
 // stream insertion operator
 ostream& operator<<(ostream& out, const Map::Territory& territory) {
-	out << "Territory name is " << *territory.Tname << endl << "The owner is : " << territory.owner << endl << "and it has an army of size" << *territory.nbArmies << endl;
+	out << "Territory name is " << *territory.Tname << endl << "The owner is : " << *territory.owner << endl << "and it has an army of size" << *territory.nbArmies << endl;
 	return out;
 	
 }
 
 Map::Territory::~Territory() {
+	delete owner;
 	owner = nullptr;
 	delete nbArmies;
 	nbArmies = nullptr;

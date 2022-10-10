@@ -65,7 +65,7 @@ public:
 		string getName();
 
 		int* nbArmies;
-		Player* owner;
+		string* owner;
 		string* Tname;
 		
 		vector<string>* adjTerr;

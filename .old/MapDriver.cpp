@@ -2,10 +2,8 @@
 // #include "Player.h"
 
 // deactivate below before submission
-// #include "Map.cpp"
-// #include "Player.cpp"
-
-
+#include "Map.cpp"
+// ******
 #include <fstream>
 #include <iostream>
 #include <fstream>
@@ -14,6 +12,8 @@
 #include <vector>
 #include <algorithm>
 #include <regex>
+
+
 
 using namespace std;
 
@@ -24,7 +24,7 @@ using namespace std;
 // it won't recognize it as the same territory in the adj list of other territories. To be fixed with Regex
 vector<vector<string>> parseMap(ifstream& file) {
     
-    string str = "";
+    string str;
     
     vector<vector<string>> arr_cont; /* [i][0]  -> continents ; [i][n] -> n > 0, Territoires d'un continent 'i' */
     // ifstream file("./maps/Grand Montreal.map");
