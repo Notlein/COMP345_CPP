@@ -115,6 +115,7 @@ vector<string> stringList;
 stringList.push_back("./maps/Grand Montreal.map");
 stringList.push_back("./maps/Quebec.map");
 stringList.push_back("./maps/Honeycomb.map");
+
 // iterable
 
 for (string x : stringList){
@@ -158,7 +159,7 @@ for (string x : stringList){
 }
 catch(const std::exception& e)
 {
-    std::cerr << "INVALID MAP FILE" << endl << "********************\n" << x << endl << "********************" << endl;
+    std::cerr << "INVALID MAP FILE" << endl << "********************\n" << x << e.what() << endl << "********************" << endl;
 }
     }
     return 0;

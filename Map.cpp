@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <queue>
 using std::cout;
 using std::vector;
 
@@ -99,23 +100,94 @@ int Map::getNbContinents(){
 
 
 bool Map::validate(){
+bool status=true;
+// for each continent
 	for(int i=0; i<continents->size();i++){
 		vector<Territory> v = *continents->at(i).territories;
-		cout << "Continent : "<< *continents->at(i).Cname << endl<<endl;
+		// cout << "Continent : "<< *continents->at(i).Cname << endl<<endl;
+
+		// for each node Territory
 		for(int j=0; j<v.size();j++){
 			vector<string> v2 = *v.at(j).adjTerr;
-				cout << "Territory : " << *v.at(j).Tname <<endl <<endl << "Adjacent Territories : "<< endl;
-			for(int k=0;k<v2.size();k++){
-				string v3 = v2.at(k);
-				cout << v3 <<endl;
+				// cout << "Territory : " << *v.at(j).Tname <<endl <<endl << "Adjacent Territories : "<< endl;
+				string a = *v.at(j).Tname;
+				// verify if there's a duplicate within the continent
+			for(int m=j+1;m<v.size();m++){
+				
+				string b = *v.at(m).Tname;
+				if(a == b){
+					status=false;
+				}
 			}
-			cout <<endl;
+			// verification for each subsequent continents: 
+			for(int n=i+1;n<continents->size();n++){
+				// for each territory in the continent:
+				for(int k=0;k<continents->at(n).territories->size();k++){
+					string d = *continents->at(n).territories->at(k).Tname;
+					//  if there's a duplicate
+					if(a == d){
+						// cout << a << " : " << d << endl;
+					status=false;
+					
+					}
+				}
+			}
 		}
-		cout <<endl;
+		
+
+		//verify if the continent is a connected subgraph (algorithm)
+		for(int h=0;h<continents->at(i).territories->size();h++){
+			// Nodes are unvisited
+			vector<bool> visited(continents->at(i).territories->size(),false);
+			int counter = 0;
+			for(int l=0;l<continents->at(i).territories->size();l++){
+				
+				//if not visited, new component
+				if ( !visited[l] ) { // Process the component that contains v.
+					counter++;
+					
+					queue<Territory> q; // For implementing a breadth-first traversal.
+					q.push(continents->at(i).territories->at(l)); // Start the traversal from vertex v.
+					visited[l] = true;
+					while ( !q.empty() ) {
+						Territory w = q.front();// w is a node in this component.
+						q.pop(); 
+						// cout << w << " ";
+						// each edge from w to some vertex z
+						for(string z : *w.adjTerr )  {
+							for(int y=0;y<continents->at(i).territories->size();y++){
+								string nameT = *continents->at(i).territories->at(y).Tname;
+								int connection = 0;
+								if(nameT == z){
+									connection = y;
+								}
+								
+								if ( !visited[connection] ) {
+								// We’ve found another node in this component.
+								visited[connection] = true;
+								q.push(continents->at(i).territories->at(connection));
+								}
+							}
+						}
+						
+					}
+
+					
+
+				}
+				
+				
+			}
+
+			if(counter != 1){
+				cout << "There are " << counter << " connected components." << endl << endl;
+				status=false;
+			}	
+		}
 	}
 	cout <<endl;
 
-	return true;	
+	return status;	
 }
 // }
 /// <summary>
