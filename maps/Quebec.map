@@ -15,6 +15,7 @@ Cantons de l'est=3
 Bas du Fleuve=2
 
 [Territories]
+
 Uniujak,189,256,Nouveau Quebec,Inukjuak,Nunavik,Kuujjuarapik
 Ivujivik,178,87,Nouveau Quebec,Salluit,Inukjuak
 Salluit,249,95,Nouveau Quebec,Ungava,Ivujivik
@@ -33,6 +34,9 @@ Cotes du Labrador,492,305,Labrador,Kuujuaq,Churchill,Kangiqsualujjaq,Goose Bay,S
 Caniapiscau,331,388,Labrador,Kuujuaq,La Grande,Fermont,Churchill
 Churchill,468,399,Labrador,Cotes du Labrador,Kuujuaq,Caniapiscau,Fermont,Sept-Iles,Havre St-Pierre,Blanc Sablon,Goose Bay
 Fermont,342,458,Labrador,Lac St-Jean,Caniapiscau,Churchill,Manicouagan,Sept-Iles
+
+
+
 
 Matagami,96,540,Abitibi,Eastmain,Mistassini,Temiscamingue,Rouyn
 Mistassini,180,537,Abitibi,Eastmain,La Grande,Lac St-Jean,Gouin,Matagami
