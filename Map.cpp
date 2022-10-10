@@ -1,12 +1,14 @@
 #include "Map.h"
+
+#include "Cards.h"
+#include "Orders.h"
 #include <sstream>
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <vector>
 #include <queue>
-using std::cout;
-using std::vector;
+
 
 
 
@@ -182,7 +184,10 @@ bool status=true;
 
 
 	// third function for connected graph validation to do
-	status = true;
+			// if(counter2 != 1){
+				
+			// 	status=false;
+			// }	
 
 	return status;	
 }

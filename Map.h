@@ -1,6 +1,8 @@
 #pragma once
 
-
+class Player;
+class Cards;
+class Orders;
 #include <iostream>
 #include <string>
 #include <fstream>
