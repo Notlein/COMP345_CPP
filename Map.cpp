@@ -169,23 +169,20 @@ bool status=true;
 								}
 							}
 						}
-						
 					}
-
-					
-
 				}
-				
-				
 			}
-
 			if(counter != 1){
-				cout << "There are " << counter << " connected components." << endl << endl;
+				
 				status=false;
 			}	
 		}
+		
 	}
-	cout <<endl;
+
+
+	// third function for connected graph validation to do
+	status = true;
 
 	return status;	
 }
