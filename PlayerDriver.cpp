@@ -1,7 +1,4 @@
-#include "Player.h"
-#include <string>
-#include <iostream>
-using namespace std;
+#include "PlayerDriver.h"
 
 string testPlayers() {
 
@@ -20,7 +17,7 @@ string testPlayers() {
             throw(errorMessage);
         }
         
-        //player.cards exists
+        //player.hand exists
         if (testPlayer1.hand != NULL)
             returnStatement = returnStatement + ", testPlayer1 has a list of cards";
         else{
@@ -29,7 +26,7 @@ string testPlayers() {
         }
 
         //player.toDefend returns list
-       /* if (testPlayer1.toDefend != NULL)
+        if (testPlayer1.toDefend != NULL)
             returnStatement = returnStatement + ", testPlayer1 has a list of territories to defend";
         else{
             errorMessage = "testPlayer1 has no list of territories to defend";
@@ -54,7 +51,7 @@ string testPlayers() {
         else{
             errorMessage = "testPlayer1's orders did not increase by one upon the call to testPlayer1.issueOrder";
             throw(errorMessage);
-        }*/
+        }
 
     }
     catch(string errorMessage){
