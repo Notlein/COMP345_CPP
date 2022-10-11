@@ -137,7 +137,7 @@ int testLoadMaps() {
     return 0;
 }
 
-int main(){
-    testLoadMaps();
-    return 0;
-}
+// int main(){
+//     testLoadMaps();
+//     return 0;
+// }

@@ -6,7 +6,7 @@ using namespace std;
 Player::Player()
 {
     name = new string("");
-    vector<Map::Territory>* territories;
+    // vector<Map::Territory>* territories;
     // vector<Card*> playerHand;
     // vector<Order*> ordersIssued;
 }
@@ -14,8 +14,8 @@ Player::Player()
 Player::~Player(){
     name = nullptr;
     delete name;
-    territories = nullptr;
-    delete territories;
+    // territories = nullptr;
+    // delete territories;
 }
 
 // Player::Player(string playerName, vector<Map::Territory*> territoriesOwned, vector<Card*> playerHand, vector<Order*> ordersIssued) 

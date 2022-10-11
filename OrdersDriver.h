@@ -4,4 +4,4 @@
 using namespace std;
 
 
-    string testOrdersLists();
+    int testOrdersLists();
