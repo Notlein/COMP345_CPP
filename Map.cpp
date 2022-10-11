@@ -1,6 +1,11 @@
 #include "Map.h"
 // #include "Player.h"
-
+/**
+ *
+ * @author MAxime-Alexandre Gosselin - 27550863
+ * @date 2022.10.9 Tuesday
+ *
+ */
 
 #include <sstream>
 #include <iostream>

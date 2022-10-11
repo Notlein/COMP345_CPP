@@ -1,4 +1,4 @@
-// #pragma once
+#pragma once
 
 // #include "Cards.h"
 // #include "Map.h"
@@ -20,7 +20,7 @@ class Player
 
         //Data members
         string* name;
-        vector<Map::Territory> *territories;
+        // vector<Map::Territory> *territories;
         // vector<Cards*> *hand;
         // vector<Orders*> *orders;
 

@@ -3,6 +3,5 @@
 #include <iostream>
 using namespace std;
 
-public:
 
     string testOrdersLists();

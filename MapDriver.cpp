@@ -1,11 +1,11 @@
-#include "Map.h"
+
 // #include "Player.h"
 
 // deactivate below before submission
 // #include "Map.cpp"
 // #include "Player.cpp"
 
-
+#include "MapDriver.h"
 #include <fstream>
 #include <iostream>
 #include <fstream>
@@ -82,7 +82,7 @@ vector<vector<string>> parseMap(ifstream& file) {
 
 
 // loadMap function which can receive any number of maps by using : stringList.push_back("filepath/name.map");
-int testloadMaps() {
+int testLoadMaps() {
     
     vector<string> stringList;
 
@@ -138,6 +138,6 @@ int testloadMaps() {
 }
 
 int main(){
-    testloadMaps();
+    testLoadMaps();
     return 0;
 }
