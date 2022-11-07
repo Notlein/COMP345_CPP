@@ -108,3 +108,28 @@ void GameEngine::changeState(string * input) {
 
 }
 
+int reinforcementPhase(){
+
+  
+
+}
+
+int issueOrdersPhase(){
+
+
+
+}
+
+int issueOrdersPhase(){
+
+
+
+}
+
+  
+int mainGameLoop(){
+
+    
+
+}
+
