@@ -1,21 +1,22 @@
 #include "OrdersDriver.h"
-
-string testOrdersLists(){
+class Orders;
+int testOrdersLists(){
 
     //create test orderlist
-    OrderList testOrderList = new OrderList();
-
+    OrderList testOrderList;
+    queue<Orders*> q = testOrderList.get_order_list();
     //create individual orders and add them to testOrderList
 
-    String returnStatement;
+    string returnStatement;
 
     try{
-
-        for(i = testOrderList.being(); i != testOrderList.end(); i++){
+        
+        for(Orders* i = q.front(); i != q.back(); i++){
 
             //i is an order
-            i.validate();
-            i.execute();
+            Orders ii = *i;
+            ii.validate();
+            ii.execute();
             //the above two invocations prove that the order's class is a subclass of order through polimorphism.
             //validate and execute are both methods or class Order which are inherited by subtypes
 
@@ -33,6 +34,6 @@ string testOrdersLists(){
 
     }
 
-    return testOrdersLists;
+    return 0;
 
 }
