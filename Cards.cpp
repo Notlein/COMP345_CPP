@@ -8,6 +8,7 @@
  */
 
 #include <ctime>
+#include <new>
 using std::cin;
 using std::cout;
 using std::endl;
@@ -24,7 +25,9 @@ Card::Card()
 }
 
 // Default Destructor
-Card::~Card() {}
+Card::~Card()
+{
+}
 
 Card::Card(string s) { *card_type = s; }
 
@@ -64,6 +67,7 @@ Deck::Deck()
 
 Deck::~Deck()
 {
+  delete[] & arrDeck;
   // Default Destructor
 }
 
@@ -124,8 +128,8 @@ void Deck::genDeck()
     }
   }
 
-
-  cout << "Deck is Generated." << endl;
+  // cout << "Deck is Generated." << endl;
+  
 }
 // Display the current deck
 void Deck::displayDeck(string arr[])
@@ -206,6 +210,16 @@ void Hand::displayHandCards()
   }
 }
 
+void Hand::displayVec(vector<string *> *vec)
+{
+
+  cout << "This player has Cards:" << endl;
+  for (int i = 0; i < 2; i++)
+  {
+    cout << "\t" << i + 1 << " " << *vec->at(i) << endl;
+  }
+}
+
 // set the card of a hand.
 void Hand::set_card(string s)
 {
@@ -248,49 +262,48 @@ void Hand::return_to_Deck(Deck *deck, string s)
   dynamicDeckSize++;
 }
 
-
 // A freefunction that tests the methods.
-void testCards()
-{
-  Deck d;
+// void testCards()
+// {
+//   Deck d;
 
-  d.genDeck();
+//   d.genDeck();
 
-  cout << endl;
-  Hand h;
+//   cout << endl;
+//   Hand h;
 
-  srand((int)time(0));
+//   srand((int)time(0));
 
-  int v1 = rand() % 10 + 1;
-  cout << "Hand will draw " << v1 << " times." << endl;
-  for (int i = 0; i < v1; i++)
-  {
-    h.set_card(d.draw());
-  }
-  cout << endl;
+//   int v1 = rand() % 10 + 1;
+//   cout << "Hand will draw " << v1 << " times." << endl;
+//   for (int i = 0; i < v1; i++)
+//   {
+//     h.set_card(*d.draw());
+//   }
+//   cout << endl;
 
-  while (true)
-  {
-    if (numCardsHand == 0)
-    {
-      cout << "You do not have the card(s) in your hand. \n";
-      break;
-    }
-    h.displayHandCards();
-    cout << "Which card do you want to play: " << endl;
-    cout << "Enter 0 to quit." << endl;
-    int index;
-    cin >> index;
-    if (index == 0)
-    {
-      cout << "You entered 0. \n";
-      break;
-    }
-    h.play(&d, h.arrHand[index - 1], index - 1);
-  }
+//   while (true)
+//   {
+//     if (numCardsHand == 0)
+//     {
+//       cout << "You do not have the card(s) in your hand. \n";
+//       break;
+//     }
+//     h.displayHandCards();
+//     cout << "Which card do you want to play: " << endl;
+//     cout << "Enter 0 to quit." << endl;
+//     int index;
+//     cin >> index;
+//     if (index == 0)
+//     {
+//       cout << "You entered 0. \n";
+//       break;
+//     }
+//     h.play(&d, h.arrHand[index - 1], index - 1);
+//   }
 
-  cout << endl;
-  h.displayHandCards();
-  cout << endl;
-  d.displayDeck(d.arrDeck);
-};
+//   cout << endl;
+//   h.displayHandCards();
+//   cout << endl;
+//   d.displayDeck(d.arrDeck);
+// };

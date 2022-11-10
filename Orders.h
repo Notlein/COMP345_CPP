@@ -2,194 +2,204 @@
 #include <iostream>
 #include <queue>
 
+
 using namespace std;
 
-/*
-	BASE CLASS : ORDERS
-*/
+// forward declaration
+class Territory;
+class Player;
 
-class Orders {
+// ----------------------base class----------------
 
-public:
-	// Constructors ---------
-	Orders(); // default constructor
-	Orders(const Orders& theOrder); //copy constructor
-									
-	// Assignment operator
-	virtual Orders& operator=(const Orders& theOrder); 
-	
-	// Methods --------------
-	virtual bool validate(); // validates the orders to ensure that it's a valid order
-	virtual void execute(); // executes the order + output the description of the execution
+class Order {
 
-	Orders(std::string orderType); // setting up the type of the Order
-	std::string getType() const; // Accessor that gets the type of the Order
-	string* _currentState;
+	protected:
+		bool if_executed;
+		string effect;
+		Player * owner;
 
-private:
-	// Stream Insertion Operator
-	friend std::ostream& operator << (std::ostream& desc, const Orders& theOrder);
-	// Order type
-	std::string* _orderType;
+	public:
+		// Constructors ---------
+		// default constructor
+		Order();	
+		// copy constructor					
+		Order(const Order &o); 
+		// Assignment operator
+		Order &operator=(const Order &o); 		
+		// stream insertion operator
+		friend std::ostream &operator<<(std::ostream &out, const Order &o);
+
+		// Methods --------------
+		// validates the orders to ensure that it's a valid order
+		virtual bool validate() = 0; 
+		// executes the order + output the description of the execution
+		virtual void execute() = 0;	
 };
 
-/*
-	SUBCLASS : DEPLOY
-*/
+// ----------------------Deploy----------------
 
-class Deploy :public Orders {
+class Deploy : public Order {
+	private:
+		int my_num_army;
+		Territory * my_target;
 
-public:
-	// Constructors ----------------
-	Deploy(); // default constructor
-	Deploy(const Deploy& toDep); // copy constructor
 
-	// Assignment Operator ---------
-	virtual Deploy& operator=(const Deploy& toDep);
+	public:
+		// Constructors ----------------
+		Deploy();
+		// Deploy(int num_army, Territory * target);	
+		// copy constructor
+		Deploy(const Deploy & d);
+		// assignment operator
+		Deploy &operator=(const Deploy &d);
+		// stream insertion operator
+		friend ostream &operator<<(ostream &out, const Deploy &d);
 
-	// Methods ---------------------
-	bool validate(); // validates the orders to ensure that it's a valid order
-	void execute(); // executes the order + output the description of the execution
+		// Methods ---------------------
+		// validates the orders to ensure that it's a valid order
+		bool validate(); 
+		// executes the order + output the description of the execution
+		void execute();	
 
-private:
-	// Stream Insertion Operator ---
-	friend std::ostream& operator << (std::ostream& desc, const Deploy& deploy);
+
 };
 
-/*
-	SUBCLASS : ADVANCE
-*/
+// ----------------------Advance----------------
 
-class Advance :public Orders {
+class Advance : public Order {
+	private:
+		int my_num_army;
+		Territory * source;
+		Territory * target;
 
-public:
-	// Constructors ----------------
-	Advance(); // default constructor
-	Advance(const Advance& toAdv); // copy constructor
+	public:
+		// Constructors ----------------
+		Advance();
+		// Advance(int num_army, Territory * source, Territory * target);	
+		// copy constructor		   
+		Advance(const Advance &a); 
+		// Assignment Operator 
+		Advance &operator=(const Advance &a);
+		// stream insertion operator
+		friend ostream &operator<<(ostream &out, const Advance &a);
 
-	// Assignment Operator ---------
-	virtual Advance& operator=(const Advance& toAdv);
+		// Methods ---------------------
+		// validates the orders to ensure that it's a valid order
+		bool validate(); 
+		// executes the order + output the description of the execution
+		void execute();	
 
-	// Methods ---------------------
-	bool validate(); // validates the orders to ensure that it's a valid order
-	void execute(); // executes the order + output the description of the execution
-
-private:
-	// Stream Insertion Operator ---
-	friend std::ostream& operator << (std::ostream& desc, const Advance& deploy);
 };
 
-/*
-	SUBCLASS : BOMB
-*/
+// ----------------------Airlift----------------
 
-class Bomb :public Orders {
+class Airlift : public Order {
+	private:
+		int my_num_army;
+		Territory * source;
+		Territory * target;
+	public:
+		// Constructors ----------------
+		Airlift();
+		// Airlift(int num_army, Territory * source, Territory * target);		
+		// copy constructor		   
+		Airlift(const Airlift &a); 
+		// Assignment Operator ---------
+		Airlift &operator=(const Airlift &a);
+		// stream insertion operator
+		friend ostream &operator<<(ostream &out, const Airlift &a);
 
-public:
-	// Constructors ----------------
-	Bomb(); // default constructor
-	Bomb(const Bomb& toAdv); // copy constructor
+		// Methods ---------------------
+		// validates the orders to ensure that it's a valid order
+		bool validate(); 
+		// executes the order + output the description of the execution
+		void execute();	
 
-	// Assignment Operator ---------
-	virtual Bomb& operator=(const Bomb& toAdv);
-
-	// Methods ---------------------
-	bool validate(); // validates the orders to ensure that it's a valid order
-	void execute(); // executes the order + output the description of the execution
-
-private:
-	// Stream Insertion Operator ---
-	friend std::ostream& operator << (std::ostream& desc, const Bomb& deploy);
 };
 
-/*
-	SUBCLASS : BLOCKADE
-*/
+// ----------------------Bomb----------------
+class Bomb : public Order {
+	private:
+		Territory * target;
+	public:
+		// Constructors ----------------
+		Bomb();	
+		// copy constructor		   
+		Bomb(const Bomb &b); 
+		// Assignment Operator ---------
+		Bomb &operator=(const Bomb &b);
+		// stream insertion operator
+		friend ostream &operator<<(ostream &out, const Bomb &b);
 
-class Blockade :public Orders {
-
-public:
-	// Constructors ----------------
-	Blockade(); // default constructor
-	Blockade(const Blockade& toAdv); // copy constructor
-
-	// Assignment Operator ---------
-	virtual Blockade& operator=(const Blockade& toAdv);
-
-	// Methods ---------------------
-	bool validate(); // validates the orders to ensure that it's a valid order
-	void execute(); // executes the order + output the description of the execution
-
-private:
-	// Stream Insertion Operator ---
-	friend std::ostream& operator << (std::ostream& desc, const Blockade& deploy);
+		// Methods ---------------------
+		// validates the orders to ensure that it's a valid order
+		bool validate(); 
+		// executes the order + output the description of the execution
+		void execute();	
 };
 
-/*
-	SUBCLASS : AIRLIFT
-*/
+// ----------------------Blockade----------------
 
-class Airlift :public Orders {
+class Blockade : public Order {
+	private:
+		Territory * target;
+	public:
+		// Constructors ----------------
+		Blockade();	
+		// copy constructor		   
+		Blockade(const Blockade &b); 
+		// Assignment Operator ---------
+		Blockade &operator=(const Blockade &b);
+		// stream insertion operator
+		friend ostream &operator<<(ostream &out, const Blockade &b);
 
-public:
-	// Constructors ----------------
-	Airlift(); // default constructor
-	Airlift(const Airlift& toAdv); // copy constructor
-	
-	// Assignment Operator ---------
-	virtual Airlift& operator=(const Airlift& toAdv);
-
-	// Methods ---------------------
-	bool validate(); // validates the orders to ensure that it's a valid order
-	void execute(); // executes the order + output the description of the execution
-
-private:
-	// Stream Insertion Operator ---
-	friend std::ostream& operator << (std::ostream& desc, const Airlift& deploy);
+		// Methods ---------------------
+		// validates the orders to ensure that it's a valid order
+		bool validate(); 
+		// executes the order + output the description of the execution
+		void execute();	
 };
 
-/*
-	SUBCLASS : NEGOTIATE
-*/
 
-class Negotiate :public Orders {
 
-public:
-	// Constructors ----------------
-	Negotiate(); // default constructor
-	Negotiate(const Negotiate& toAdv); // copy constructor
+// ----------------------Negotiate----------------
 
-	// Assignment Operator ---------
-	virtual Negotiate& operator=(const Negotiate& toAdv);
+class Negotiate : public Order {
+	private:
+		Player * target;
+	public:
+		// Constructors ----------------
+		Negotiate();	
+		// copy constructor		   
+		Negotiate(const Negotiate &n);
+		// Assignment Operator ---------
+		Negotiate &operator=(const Negotiate &n);
+		// stream insertion operator
+		friend ostream &operator<<(ostream &out, const Negotiate &n);
 
-	// Methods ---------------------
-	bool validate(); // validates the orders to ensure that it's a valid order
-	void execute(); // executes the order + output the description of the execution
-
-private:
-	// Stream Insertion Operator ---
-	friend std::ostream& operator << (std::ostream& desc, const Negotiate& deploy);
+		// Methods ---------------------
+		// validates the orders to ensure that it's a valid order
+		bool validate(); 
+		// executes the order + output the description of the execution
+		void execute();	 
 };
 
-class OrderList {
+class OrdersList {
+	public:
+		// default constructor
+		OrdersList();					  
+		// copy constructor
+		OrdersList(const OrdersList& ol);
+		~OrdersList();
 
-public:
-	// Constructors ----------------
-	OrderList(); // default constructor
-	OrderList(const OrderList& list); // copy constructor
+		// Methods ---------------------
+		void remove(int pos);
+		void move(int new_pos, int prev_pos);
+		void add(Order *o);
 
-	// Assignment Operator ---------
-	OrderList& operator=(const OrderList& list);
+	private:
+		vector<Order *> my_ol;
 
-	// Methods ---------------------
-	void remove();
-	void move();
 
-	int size(); // accessor to get the size of the list
-
-	std::queue<Orders*>& get_order_list();
-
-private:
-	std::queue<Orders*>* _theList;
-	friend std::ostream& operator << (std::ostream& out, const OrderList& list);
 };
+

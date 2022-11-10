@@ -1,11 +1,11 @@
-
+#include "Map.h"
 // #include "Player.h"
 
 // deactivate below before submission
 // #include "Map.cpp"
 // #include "Player.cpp"
 
-#include "MapDriver.h"
+
 #include <fstream>
 #include <iostream>
 #include <fstream>
@@ -82,16 +82,17 @@ vector<vector<string>> parseMap(ifstream& file) {
 
 
 // loadMap function which can receive any number of maps by using : stringList.push_back("filepath/name.map");
-int testLoadMaps() {
+int testloadMaps() {
     
     vector<string> stringList;
 
     // Add maps here
     stringList.push_back("./maps/Grand Montreal.map");
-    stringList.push_back("./maps/Quebec.map");
-    stringList.push_back("./maps/Honeycomb.map");
+    // stringList.push_back("./maps/Quebec.map");
+    // stringList.push_back("./maps/Honeycomb.map");
 
     // iterable
+    
 
     for (string x : stringList){
         ifstream file(x);
@@ -104,32 +105,20 @@ int testLoadMaps() {
             x = x.substr(0,x.length()-4);
             m.mapName = new string(x);
 
-            // Uncomment below to show Continent name, number of points and territories.
-            // for (int i=0;i<m.continents->size();i++){
-            // string* s = new string(*m.continents->at(i).Cname);
-            // int* s1 = new int(*m.continents->at(i).nbPts);
-            // cout << "Continent name is : " << *s <<endl << "Number of points : " << *s1 << endl << "Territories are : ";
-            // cout << *m.continents->at(i).territories->at(0).Tname;
-            // for (int j=1;j<m.continents->at(i).territories->size();j++){
-            //     cout << ", "<<  *m.continents->at(i).territories->at(j).Tname;
-            // }
-            //     cout << "." << endl << endl;
-            // }
-            // end of comment section 
 
-            bool val = m.validate();
-
-            if(m.getNbContinents() < 1){
-                std::cerr  << endl << "********************\n" << x << endl << "********************\n" << "There is a problem in the map syntax : Please verify the .map file" << endl;
-            } else if (!val){
-                std::cerr  << endl << "********************\n" << x << endl << "********************\n" << "There is a problem in the map. It's not a proper connected graph." << endl;
-            } else {
-                std::cout << "Succesful map created" << endl << "********************\n" << x << endl << "********************" << endl;
-                cout << m << endl;  
+            Continent c1 = m.continents->at(0);
+            string* s = new string(*c1.Cname);
+            int* s1 = new int(*c1.nbPts);
+            cout << "Continent name is : " << *s <<endl << "Number of points : " << *s1 << endl << "Territories are : ";
+            cout << *c1.territories->at(0).Tname;
+            for (int j=1;j<c1.territories->size();j++){
+                cout << ", "<<  *c1.territories->at(j).Tname;
             }
+            cout << "." << endl << endl;
+            
 
 
-            m.~Map();
+            
         } catch(const std::exception& e){
             std::cerr << "INVALID MAP FILE" << endl << "********************\n" << x << endl << "********************"<< endl << endl << e.what() << endl << endl;
         }
@@ -137,7 +126,8 @@ int testLoadMaps() {
     return 0;
 }
 
-// int main(){
-//     testLoadMaps();
-//     return 0;
-// }
+int main(){
+    testloadMaps();
+
+    return 0;
+}

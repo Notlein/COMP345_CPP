@@ -1,5 +1,8 @@
-#include "Map.h"
-
+#pragma once
+// #include "Map.h"
+#include <string>
+#include <vector>
 using namespace std;
 
-    int testLoadMaps();
+vector<vector<string> > LoadMaps(int);
+vector<vector<string> > parseMap(ifstream &file);

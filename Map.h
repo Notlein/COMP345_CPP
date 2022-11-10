@@ -1,91 +1,64 @@
 #pragma once
-
-class Player;
-// class Cards;
-// class Orders;
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <vector>
 #include <utility>
 
+
 using namespace std;
 
-class Map
-{
-public:
+class Player;
 
-
-	 // default constructor
-	Map() ;
-	Map(int *nbT, int *nbC, string *mapN);
-	
-        // copy constructor
-	Map(const Map& map);
-
-        // assignment operator
-        Map& operator =(const Map& map);
-
-        // stream insertion operator
-        friend ostream& operator <<(ostream& out, const Map& map);
-
-        // Destructor
-		~Map();
-
-
-		
-	
-
-
-	class Territory {
+class Territory { 
 	public:
 		// default constructor
 		Territory();
 
-		Territory(string* name, string* properties);	
-
-
+		Territory(string *name, string *properties);
+		Territory(string *name);
 		// copy constructor
-		Territory(const Territory& territory);
+		Territory(const Territory &territory);
 
 		// assignment operator
-		Territory& operator=(const Territory& territory);
+		Territory &operator=(const Territory &territory);
 
 		// stream insertion operator
-		friend ostream& operator<<(ostream& out, const Territory& territory);
+		friend ostream &operator<<(ostream &out, const Territory &territory);
 
 		// Destructor
 		~Territory();
 
-		
-		string getOwner() ; /* must change to player*/
-		int getNbArmies() ;
+		Player * getOwner(); /* must change to player*/
+		void setOwner(Player * new_owner);
+		void setNbArmies(int num);
+		int getNbArmies();
 
 		vector<string> getAdjacentTerritories();
 		string getName();
 
-		int* nbArmies;
-		Player* owner;
-		string* Tname;
-		
-		vector<string>* adjTerr;
-	};
+		int *nbArmies;
+		Player *owner;
+		string *Tname;
 
-	class Continent {
+		vector<string> *adjTerr;
+};
+
+class Continent {
 	public:
 		// default constructor
 		Continent();
 
-		Continent(string* name, int* pts, vector<Territory>* list_terr);
+		Continent(string *name, int *pts, vector<Territory> *list_terr);
 
 		// copy constructor
-		Continent(const Continent& continent);
+		Continent(const Continent &continent);
 
 		// assignment operator
-		Continent& operator=(const Continent& continent);
+		Continent &operator=(const Continent &continent);
 
 		// stream insertion operator
-		friend ostream& operator<<(ostream& out, const Continent& continent);
+		friend ostream &operator<<(ostream &out, const Continent &continent);
 
 		// Destructor
 		~Continent();
@@ -93,34 +66,41 @@ public:
 		string getName();
 		int getNbPts();
 
+		string *Cname;
+		int *nbPts;
+		vector<Territory> *territories;
+};
 
-		string* Cname;
-		int* nbPts;
-		vector<Territory>* territories;
-	};
-	
+class Map {
+	public:
+		// default constructor
+		Map();
+		Map(int *nbT, int *nbC, string *mapN);
 
-	
+		// copy constructor
+		Map(const Map &map);
 
-	Map(vector<vector<string>> fileName);	
+		// assignment operator
+		Map &operator=(const Map &map);
 
-	/*Continent getContinent(Continent continent) const;*/
-	int getNbContinents();
-	bool validate();
-	Continent getContinent(int* index);
-	// void setMapName(string* input) {};
-	/*vector<string> getTerritories(Continent continent) const; */
-	
-	
-	
+		// stream insertion operator
+		friend ostream &operator<<(ostream &out, const Map &map);
 
-	static bool validateMap(); /* Safeguard here */
+		// Destructor
+		~Map();
 
+		Map(vector<vector<string>> fileName);
 
-	int* nbContinents;
-	string* mapName;
-	vector<Continent>* continents;
-	
+		/*Continent getContinent(Continent continent) const;*/
+		int getNbContinents();
+		bool validate();
+		Continent getContinent(int *index);
+		// void setMapName(string* input) {};
+		/*vector<string> getTerritories(Continent continent) const; */
 
+		static bool validateMap(); /* Safeguard here */
 
+		int *nbContinents;
+		string *mapName;
+		vector<Continent> *continents;
 };

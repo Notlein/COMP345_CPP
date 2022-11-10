@@ -49,6 +49,7 @@
         "xtr1common": "cpp",
         "deque": "cpp",
         "queue": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "stdlib.h": "c"
     }
 }

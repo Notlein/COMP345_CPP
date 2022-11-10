@@ -12,8 +12,7 @@ using std::vector;
 // Declaration of deck size, deck contains 25 cards.
 const int sizeDeck = 25;
 
-class Card
-{
+class Card {
 public:
   Card();
   ~Card();
@@ -29,8 +28,7 @@ public:
   string *card_type;
 };
 
-class Deck : public Card
-{
+class Deck : public Card {
 
 public:
   string draw();
@@ -38,7 +36,7 @@ public:
   Deck();
   ~Deck();
   Deck(Card *card);
-  
+
   Deck &operator=(const Deck &d);
 
   Deck(const Deck &d);
@@ -53,9 +51,7 @@ public:
   vector<Card *> deck;
 };
 
-class Hand : Deck
-{
-
+class Hand : Deck {
 public:
   Hand();
   ~Hand();
@@ -73,6 +69,8 @@ public:
   void displayHandCards();
 
   void play(Deck *deck, string s, int index);
+
+  void displayVec(vector<string *> *vec);
 
   void return_to_Deck(Deck *deck, string s);
 

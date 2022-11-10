@@ -1,65 +1,50 @@
 #include "PlayerDriver.h"
 
-string testPlayers() {
+// void testPlayers()
+// {
 
-    string returnStatement;
-    string errorMessage;
+//     vector<Order *> src;
+//     vector<string *> rrr;
 
-    //create test player(s)
-    Player testPlayer1 = Player();
+//     vector<string *> tet;
 
-    try{
-        //player.territories exists
-        // if (testPlayer1.territories != NULL)
-        //     returnStatement = returnStatement + "testPlayer1 has a list of territories";
-        // else{
-        //     errorMessage = "testPlayer1 has no list of territories";
-        //     throw(errorMessage);
-        // }
-        
-        //player.hand exists
-        // if (testPlayer1.hand != NULL)
-        //     returnStatement = returnStatement + ", testPlayer1 has a list of cards";
-        // else{
-        //     errorMessage = "testPlayer1 has no list of cards";
-        //     throw(errorMessage);
-        // }
+//     string a = "Africa";
+//     string b = "Europe";
 
-        //player.toDefend returns list
-        // if (testPlayer1.toDefend != NULL)
-        //     returnStatement = returnStatement + ", testPlayer1 has a list of territories to defend";
-        // else{
-        //     errorMessage = "testPlayer1 has no list of territories to defend";
-        //     throw(errorMessage);
-        // }
+//     tet.push_back(&a);
+//     tet.push_back(&b);
 
-        // //player.toAttack returns list
-        // if (testPlayer1.toAttack != NULL)
-        //     returnStatement = returnStatement + ", testPlayer1 has a list of territories to attack";
-        // else{
-        //     errorMessage = "testPlayer1 has no list of territories to attack";
-        //     throw(errorMessage);
-        // }
+//     vector<string *> card;
+//     string e = "bomb";
+//     string f = "spy";
 
-        // //check size of order list
-        // int orders = testPlayer1.orders;
-        // //player.issueOrder()
-        // testPlayer1.issueOrder();
-        // //verify that order list is now larger by one
-        // if (testPlayer1.orders = orders + 1)
-        //     returnStatement = returnStatement + ", testPlayer1's orders increased by one upon the call to testPlayer1.issueOrder";
-        // else{
-        //     errorMessage = "testPlayer1's orders did not increase by one upon the call to testPlayer1.issueOrder";
-        //     throw(errorMessage);
-        // }
+//     card.push_back(&e);
+//     card.push_back(&f);
+//     Player *player1;
+//     string name = "Giwon Lee";
+//     player1 = new Player(name, tet, card, src);
+//     (*player1).issueOrder("issue order 1");
+//     (*player1).issueOrder("issue order 2");
 
-    }
-    catch(string errorMessage){
+//     (*player1).printOrder();
 
-        cout << errorMessage;
+//     (*player1).toAttack();
+//     (*player1).toDefend();
 
-    }
+//     Player *a2 = new Player(*player1);
 
-    return returnStatement;
+//     cout << endl;
+
+//     (*a2).toAttack();
+
+//     cout << "\n";
+// }
+
+void addPlayer()
+{
+
+
+    
+
 
 }
