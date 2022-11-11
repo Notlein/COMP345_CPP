@@ -13,7 +13,7 @@ using namespace std;
 Order::Order() { 	
 	this->if_executed = false;
 	this->effect = "";
-	this->owner = NULL;
+	this->owner = new Player();
 }
 
 Order::Order(Player * owner) {
@@ -152,6 +152,7 @@ void Advance::execute() {
 			 if (target->getNbArmies() == 0) {
 				target->setOwner(owner);
 				target->setNbArmies(my_num_army);
+				target->getOwner()->set_received_card(true);
 				cout << "attacking player " << source->getOwner()->getName() << " won the attack, with " << my_num_army << " armies remaining" << endl;
 			 } else {
 				cout << "defending player " << target->getOwner()->getName() << " won the attack, with " << target->getNbArmies() << " armies remaining" << endl;

@@ -129,8 +129,8 @@ int main() {
     vector<Player *> pl2;
 
     //Player(int reinforcement, string playerName, vector<Territory*> territories, vector<Player*> noAttack, const Hand & hand, const OrdersList & ol)
-    Player player1 = Player(50, "p1", t11, pl1, hand1, ol1);
-    Player player2 = Player(50, "p2", t22, pl2, hand2, ol2);
+    Player player1 = Player(50, "p1", &t11, &pl1, hand1, ol1);
+    Player player2 = Player(50, "p2", &t22, &pl2, hand2, ol2);
     t1.setOwner(&player1);
     t2.setOwner(&player2);
     t3.setOwner(&player2);

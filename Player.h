@@ -14,7 +14,8 @@ class Player {
 public:
     Player();  // default constructor
     ~Player(); // destructor
-    Player(int reinforcement, string playerName, vector<Territory*> territories, vector<Player*> noAttack, const Hand & hand, const OrdersList & ol);
+    Player(string playerName);
+    Player(int reinforcement, string playerName, vector<Territory*> *territories, vector<Player*> *noAttack, const Hand & hand, const OrdersList & ol);
     Player(const Player &p); // copy constructor
     friend ostream &operator<<(ostream &out, const Player &player);
 
@@ -31,12 +32,15 @@ public:
     void remove_territory(Territory * target);
     void add_no_attack(Player * p);
     bool if_can_attack(Player * p);
+    void set_received_card(bool v);
+    
 
 private:
     string name;
     int reinforcement;
-    vector<Territory*> territories;
-    vector<Player*> noAttack;
+    vector<Territory*> *territories;
+    vector<Player*> *noAttack;
     Hand * hand;
     OrdersList * orders;
+    bool received_card;
 };
