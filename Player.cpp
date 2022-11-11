@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Map.h"
+#include "Orders.h"
 
 using namespace std;
 
@@ -53,8 +54,66 @@ vector<Map::Territory> toAttack()
     return attackList ;
 }
 
-void issueOrder(string order)
+void issueOrder()
 {
     // Order a = Order(order);
     //orders->push_back();
+
+    //for each turn, each player will deploy all of their available reinforcements
+
+    while(*reinforcementPool > 0 ){
+
+        orders.push_back(new Deploy);
+        *reinforcementPool--;
+
+    }
+
+    cout << *name << "Has no more reinforcements to deploy\n";
+    //for each turn, each player issues an order from one card in thier hand, if their hand is not empty.
+
+    if(!*hand.empty()){
+
+        cout << *name << "Is now issuing an order from their hand\n";
+
+        if (*(*hand[0].card_type) == "Airlift"){
+
+            orders.push_back(new Airlift);
+            //*hand[0].delete
+
+        }
+
+        else if (*(*hand[0].card_type) == "Bomb"){
+
+            orders.push_back(new Bomb);
+            //*hand[0].delete
+
+        }
+
+        else if (*(*hand[0].card_type) == "Blockade"){
+
+            orders.push_back(new Blockade);
+            //*hand[0].delete
+
+        }
+
+        else if (*(*hand[0].card_type) == "Negotiate"){
+
+            orders.push_back(new Negotiate);
+            //*hand[0].delete
+
+        }
+
+        else{
+
+            cout <<"There is an invalid card in the deck\n";
+
+        }
+    }
+
+    //Finally, for each turn, each player issues one advance order.
+
+    cout << *name << "Is now issuing an order from their hand\n";
+    orders.push_back(new Advance);
+
+    cout << *name <<"'s issue orders phase is complete for this turn\n\n";
 }

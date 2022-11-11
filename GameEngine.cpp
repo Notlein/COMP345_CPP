@@ -1,5 +1,7 @@
 #include "GameEngine.h"
+#include "Player.h"
 #include <string>
+#include <math.h>       /* floor */
 
 using namespace std;
 
@@ -110,26 +112,89 @@ void GameEngine::changeState(string * input) {
 
 int reinforcementPhase(){
 
+  for(Player player : *players){
+
+    //take count of players territories:
+    int terrCount = *(player.toDefend()).size();
+
+    //divide by 3.0:
+    double reinforcementDouble = floor(double(terrCount)/3.0);
+    int reinforcementInt = int(reinforcementDouble);
+
+
+    //minimum number of reinforcements is 3, therefore:
+    if(reinforcementInt > 3){
+
+      reinforcementInt = 3;
+
+    }
+
+    *(player.reinforcementPool) += reinforcementInt;
   
+  }
 
 }
 
 int issueOrdersPhase(){
 
+  //for each turn, each player issues a certain number of deploy order, an order for each card they currently have, as well as one advance order.
+  //Please see the implementation in Player::issueOrder()
 
+  for(Player player : *players){
 
-}
-
-int issueOrdersPhase(){
-
-
-
-}
-
+    player.issueOrder();
   
-int mainGameLoop(){
+  }
 
+}
+
+int executeOrdersPhase(){
+
+  //for each turn, each player executes all of the orders they issued in that turn
+  bool finished = false;
+  bool hasOrder = false;
+
+  while(!finished){
+
+    for(Player player : *players){
     
+      if(player.orders[0] != null){
+
+        hasOrder = true;
+        player.orders[0].execute;
+        player.orders.erase(0);
+
+      }
+    
+    }
+
+    if(hasOrder = false){
+
+      finished = true;
+
+    }
+
+  }
+
+  for(Player player : *players){
+
+    if player.toDeffend()
+
+  }
 
 }
+
+  
+void mainGameLoop(){
+
+  while(*players.size() > 1){
+
+    reinforcementPhase();
+    issueOrdersPhase();
+    executeOrdersPhase();
+
+  }
+
+}
+
 

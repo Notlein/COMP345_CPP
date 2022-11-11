@@ -29,7 +29,7 @@ class GameEngine {
         // Issue orders phase of main game loop:
         int issueOrdersPhase();
         // Execute orders phase of main game loop:
-        int issueOrdersPhase();
+        int executeOrdersPhase();
         // Main game loop:
         int mainGameLoop();
 
