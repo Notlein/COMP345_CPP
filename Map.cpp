@@ -300,7 +300,7 @@ Territory &Territory::operator=(const Territory &territory) {
 ostream &operator<<(ostream &out, const Territory &territory) {
 	out << "Territory name is " << *territory.Tname << endl
 		<< "The owner is : " << territory.owner->getName() << endl
-		<< "and it has an army of size" << *territory.nbArmies << endl;
+		<< "and it has an army of size " << *territory.nbArmies << endl;
 	return out;
 }
 

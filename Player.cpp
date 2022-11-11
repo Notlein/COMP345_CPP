@@ -46,6 +46,14 @@ Player::Player(const Player &p) {
 
 }
 
+ostream &operator<<(ostream &out, const Player &p) {
+	out << "Player " << p.name << " have " << p.territories.size() << " territories " << endl;
+    for (auto t : p.territories){
+        cout << t->getName() << endl;
+    }
+    return out;
+}
+
 void Player::toAttack()
 {
     for (int i = 0; i < territories.size(); i++)
@@ -103,6 +111,7 @@ void Player::add_no_attack(Player * p) {
 };
 
 bool Player::if_can_attack(Player * p) {
+    // if find, then cannot attack
     if (find(noAttack.begin(), noAttack.end(), p) != noAttack.end()) {
         return false;
     }

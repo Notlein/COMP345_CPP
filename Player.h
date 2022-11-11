@@ -16,6 +16,8 @@ public:
     ~Player(); // destructor
     Player(int reinforcement, string playerName, vector<Territory*> territories, vector<Player*> noAttack, const Hand & hand, const OrdersList & ol);
     Player(const Player &p); // copy constructor
+    friend ostream &operator<<(ostream &out, const Player &player);
+
 
     void toDefend();
     void toAttack();
