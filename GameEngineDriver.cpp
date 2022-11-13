@@ -34,10 +34,10 @@ void testGameStates() {
 void testMainGameLoop(){
 
     //show a player's reinforecements before and after the reninforcement phase is executed
-    cout << "This is a test of the reinforcement phase of the main game loop:\n";
-    cout << "John starts the game with 50 reinforements\n";
+    //cout << "This is a test of the reinforcement phase of the main game loop:\n";
+    //cout << "John starts the game with 50 reinforements\n";
 
-    cout << "John start the game with XXX territories, and therefore should recieve an additional XXX territories\n";
+    //cout << "John start the game with XXX territories, and therefore should recieve an additional XXX territories\n";
 
     //This must be called on a game engine object:
     //reinforcementPhase();
@@ -49,4 +49,9 @@ void testMainGameLoop(){
     //john has this many reinforcements
     //issueOrdersPhase();
     //now john has none;
+
+    //This method calls the mainGameLoop method on a game engine object.
+    //The mainGameLoop and its constituent methods for the three phases all contain console outputs that demonstrate the performance 6 features we are asked to demonstrate.
+    
+
 }

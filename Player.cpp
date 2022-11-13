@@ -73,12 +73,13 @@ void issueOrder()
 
     if(!*hand.empty()){
 
-        cout << *name << "Is now issuing an order from their hand\n";
+        cout << *name << "Is now issuing an order from a car in their hand: ";
 
         if (*(*hand[0].card_type) == "Airlift"){
 
             orders.push_back(new Airlift);
             //*hand[0].delete
+            cout << *name << "Airlift card\n";
 
         }
 
@@ -86,6 +87,7 @@ void issueOrder()
 
             orders.push_back(new Bomb);
             //*hand[0].delete
+            cout << *name << "Bomb card\n";
 
         }
 
@@ -93,6 +95,7 @@ void issueOrder()
 
             orders.push_back(new Blockade);
             //*hand[0].delete
+            cout << *name << "Blockade card\n";
 
         }
 
@@ -100,6 +103,7 @@ void issueOrder()
 
             orders.push_back(new Negotiate);
             //*hand[0].delete
+            cout << *name << "Negotiate card\n";
 
         }
 
@@ -112,8 +116,8 @@ void issueOrder()
 
     //Finally, for each turn, each player issues one advance order.
 
-    cout << *name << "Is now issuing an order from their hand\n";
+    cout << *name << "Is now issuing an advance order\n\n";
     orders.push_back(new Advance);
 
-    cout << *name <<"'s issue orders phase is complete for this turn\n\n";
+    cout << *name <<"'s issue orders phase is complete for this turn\n\n========\n\n";
 }

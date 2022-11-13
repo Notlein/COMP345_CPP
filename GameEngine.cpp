@@ -112,10 +112,14 @@ void GameEngine::changeState(string * input) {
 
 int reinforcementPhase(){
 
-  for(Player player : *players){
+  for(Player * player : *players){
+
+
+    //print how many reinforcements the current player has to test: 
+    cout << "Player " << player -> name << " currently has " << player -> reinforcementPool << "reinforcements available at the begining of their turn.\n";
 
     //take count of players territories:
-    int terrCount = *(player.toDefend()).size();
+    int terrCount = player -> toDefend().size();
 
     //divide by 3.0:
     double reinforcementDouble = floor(double(terrCount)/3.0);
@@ -129,7 +133,11 @@ int reinforcementPhase(){
 
     }
 
-    *(player.reinforcementPool) += reinforcementInt;
+    //continued test
+    cout << "Player " << player -> name << " currently has " << terrCount << "territories, so they will recieve " << reinforcementInt << "reinforcements.\n";
+    cout << "Player " << player -> name << " currently has " << player -> reinforcementPool << "reinforcements available at the end of the reinforcement phase of their turn.\n\n\n";
+
+    player -> reinforcementPool += reinforcementInt;
   
   }
 
@@ -176,22 +184,32 @@ int executeOrdersPhase(){
 
   }
 
-  for(Player player : *players){
-
-    if player.toDeffend()
-
-  }
-
 }
 
   
 void mainGameLoop(){
 
-  while(*players.size() > 1){
+  while(players -> size() > 1){
+
+    cout << "\n================";
+    cout << "\nNEW TURN";
+    cout << "\n================\n\n";
 
     reinforcementPhase();
     issueOrdersPhase();
     executeOrdersPhase();
+
+    //if a player has no more territories to defend by the end of the turn, they are eliminated from the game:
+    for(Player player : *players){
+
+      if (player->toDefend().empty()){
+
+        cout << "Player " << player.name << " has no more territories at the end of this turn, so they are eliminated."
+        *players.erase(player);
+
+      }
+
+    }
 
   }
 
