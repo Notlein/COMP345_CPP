@@ -12,15 +12,17 @@ using namespace std;
 // Defualt Constructor
 Order::Order() { 	
 	this->if_executed = false;
-	this->effect = "";
-	this->owner = new Player();
+	this->effect = "no effect";
+	this->owner = nullptr;
 }
 
 Order::Order(Player * owner) {
 	this->if_executed = false;
-	this->effect = "";
+	this->effect = "no effect";
 	this->owner = owner;
 }
+
+Order::~Order() {}
 
 
 // Copy Constructor
@@ -40,15 +42,19 @@ Order &Order::operator=(const Order &o) {
 
 // Stream insertion operator
 ostream &operator<<(ostream &out, const Order &o) {
-	return out << "This is a base order with effect " << endl;
+	return out << "Base order:" << endl 
+	<< "is_executed: " << o.if_executed << endl
+	<< "effect: " << o.effect << endl;
 }
 
 
 //	------------------ Deploy ------------------ 
 // default constructor
-Deploy::Deploy() : Order(), my_num_army(0), my_target(NULL){}
+Deploy::Deploy() : Order(), my_num_army(0), my_target(nullptr){}
 
 Deploy::Deploy(Player * owner, int num_army, Territory * target) : Order(owner), my_num_army(num_army), my_target(target) {}
+
+Deploy::~Deploy() {}
 
 // copy constructor
 Deploy::Deploy(const Deploy& d):Order(d){
@@ -64,6 +70,12 @@ Deploy &Deploy::operator=(const Deploy &d) {
 	return *this;
 }
 
+ostream &operator<<(ostream &out, const Deploy &d) {
+	return out << "Deploy order:" << endl 
+	<< "is_executed: " << d.if_executed << endl
+	<< "effect: " << d.effect << endl;
+}
+
 // Methods ---------------------
 bool Deploy::validate() {
 	return owner->territory_belong(my_target);	
@@ -73,9 +85,10 @@ void Deploy::execute() {
 	if (validate()) {
 		*(my_target->nbArmies) = *(my_target->nbArmies) + my_num_army;
 		if_executed = true;
-		cout << my_num_army << " armies have been added to territory " << *my_target->Tname << endl;
+		effect = to_string(my_num_army) + " armies have been added to territory " + *my_target->Tname;
+		cout << effect << endl;
 	} else {
-		cout << "validation failed, invalid deploy" << endl;
+		cout << "invalid deploy:" << *my_target->Tname << " doesn't belong to player " << owner->getName() << endl;
 	}
 
 }
@@ -85,6 +98,8 @@ void Deploy::execute() {
 // Constructors ----------------
 Advance::Advance() : Order(), my_num_army(0), source(nullptr), target(nullptr) {}
 Advance::Advance(Player * owner, int num_army, Territory * source, Territory * target) : Order(owner), my_num_army(num_army), source(source), target(target){}
+
+Advance::~Advance() {}
 
 Advance::Advance(const Advance& a):Order(a){
 	this->my_num_army = a.my_num_army;
@@ -101,11 +116,17 @@ Advance &Advance::operator=(const Advance &a) {
 	return *this;
 }
 
+ostream &operator<<(ostream &out, const Advance &a) {
+	return out << "Advance order:" << endl 
+	<< "is_executed: " << a.if_executed << endl
+	<< "effect: " << a.effect << endl;
+}
+
 // Methods ---------------------
 bool Advance::validate() {
 	// check if cannot attack (negotiated)
 	if (!owner->if_can_attack(target->getOwner())) {
-		cout << "invalid advance: negotiated between " << owner->getName() << " and " << target->getOwner()->getName() << endl;
+		cout << "invalid advance: previous negotiation between " << owner->getName() << " and " << target->getOwner()->getName() << endl;
 		return false;
 	}
 
@@ -122,8 +143,6 @@ bool Advance::validate() {
 		cout << "invalid advance: territory " << tgt_name << " and " << "territory "<< source->getName() << " are not adjacent " << endl;
         return false;
     }
-
-
 	return true;
 }
 
@@ -133,30 +152,32 @@ void Advance::execute() {
 		if (owner->territory_belong(target)) {
 			target->setNbArmies(target->getNbArmies() + my_num_army);
 			source->setNbArmies(source->getNbArmies() - my_num_army);
-			cout << my_num_army << " amies was moved from territory  " << source->getName() << " to " << target->getName() << endl;
-		} else { // target territory belongs to another player, attack
+			if_executed = true;
+			effect = to_string(my_num_army) + " amies was moved from territory " + source->getName() + " to " + target->getName();
+			cout << effect << endl;
+		} else { 
+			// target territory belongs to another player, attack
 			source->setNbArmies(source->getNbArmies() - my_num_army);
 			while (my_num_army > 0  && target->getNbArmies() > 0) {
-				bool attack_kill = (rand() % 10) < 6;
-				bool defend_kill = (rand() % 10) < 7;
-				if (attack_kill && defend_kill) {
-					my_num_army -= 1;
+				if ((rand() % 10) < 6) {
 					target->setNbArmies(target->getNbArmies() - 1);
-				} else if (attack_kill) {
-					target->setNbArmies(target->getNbArmies() - 1);
-				} else if (defend_kill) {
+				}
+				if ((rand() % 10) < 7) {
 					my_num_army -= 1;
 				}
-			 }
-			 // defender's army units are eliminated, the attacker captures the territory
-			 if (target->getNbArmies() == 0) {
+			}
+			// defender's army units are eliminated, the attacker captures the territory
+			if (target->getNbArmies() == 0) {
 				target->setOwner(owner);
 				target->setNbArmies(my_num_army);
 				target->getOwner()->set_received_card(true);
-				cout << "attacking player " << source->getOwner()->getName() << " won the attack, with " << my_num_army << " armies remaining" << endl;
-			 } else {
-				cout << "defending player " << target->getOwner()->getName() << " won the attack, with " << target->getNbArmies() << " armies remaining" << endl;
-			 }
+				effect = "attacking player " + source->getOwner()->getName() + " won the attack, with " + to_string(my_num_army) + " armies remaining";
+				cout << effect << endl;
+			} else {
+				effect = "defending player " + target->getOwner()->getName() + " won the attack, with " + to_string(target->getNbArmies()) <+ " armies remaining";
+				cout << effect << endl;
+			}
+			if_executed = true;
 		}
 	}
 }
@@ -168,10 +189,18 @@ void Advance::execute() {
 Airlift::Airlift() : Order(), my_num_army(0), source(nullptr), target(nullptr) {}
 Airlift::Airlift(Player *owner, int my_num_army, Territory * source, Territory * target): Order(owner), my_num_army(my_num_army), source(source), target(target){}
 
+Airlift::~Airlift() {}
+
 Airlift::Airlift(const Airlift& a):Order(a){
 	this->my_num_army = a.my_num_army;
 	this->source = new Territory(*a.source);
 	this->target = new Territory(*a.target);
+}
+
+ostream &operator<<(ostream &out, const Airlift &a) {
+	return out << "Airlift order:" << endl 
+	<< "is_executed: " << a.if_executed << endl
+	<< "effect: " << a.effect << endl;
 }
 
 // Assignment Operator ---------
@@ -202,7 +231,9 @@ void Airlift::execute() {
 		// selected number of army units is moved from the source to the target territory
 		source->setNbArmies(source->getNbArmies() - my_num_army);
 		target->setNbArmies(target->getNbArmies() + my_num_army);
-		cout << "moved " << my_num_army << " armies from source territory " << source->getName() << " to target territory " << source->getName()<< endl;
+		if_executed = true;
+		effect = "moved " + to_string(my_num_army) + " armies from source territory " + source->getName() + " to target territory " + source->getName();
+		cout << effect << endl;
 	} 
 }
 
@@ -212,6 +243,8 @@ void Airlift::execute() {
 Bomb::Bomb() : Order(),target(nullptr) {}
 
 Bomb::Bomb(Player *owner, Territory * target): Order(owner), target(target){}
+
+Bomb::~Bomb() {}
 
 Bomb::Bomb(const Bomb& b):Order(b) {
 	this->target = new Territory(*b.target);
@@ -224,10 +257,17 @@ Bomb &Bomb::operator=(const Bomb &b) {
 	return *this;
 }
 
+ostream &operator<<(ostream &out, const Bomb &b) {
+	return out << "Bomb order:" << endl 
+	<< "is_executed: " << b.if_executed << endl
+	<< "effect: " << b.effect << endl;
+}
+
+
 // Methods ---------------------
 bool Bomb::validate() {
 	if (!owner->if_can_attack(target->getOwner())) {
-		cout << "invalid bomb: negotiated between " << owner->getName() << " and " << target->getOwner()->getName() << endl;
+		cout << "invalid bomb: previous negotiation between " << owner->getName() << " and " << target->getOwner()->getName() << endl;
 		return false;
 	} 
 	if (owner->territory_belong(target)) {
@@ -238,8 +278,6 @@ bool Bomb::validate() {
 		cout << "invalid bomb: target territory " << target->getName() << " is not adjacent to any territories belonging to player " << owner->getName() << endl;
 		return false;
 	} 
-
-
 	return true;
 }
 
@@ -247,7 +285,9 @@ void Bomb::execute() {
 	if (validate()) {
 		// half of the army units are removed from this territory
 		target->setNbArmies(target->getNbArmies()/2);
-		cout << "bomb: " << target->getNbArmies() << " armies were removed from territory " << target->getName() << endl;
+		if_executed = true;
+		effect = "bomb: " + to_string(target->getNbArmies()) + " armies were removed from territory " + target->getName();
+		cout << effect << endl;
 	}
 }
 
@@ -255,7 +295,9 @@ void Bomb::execute() {
 
 // Constructors ----------------
 Blockade::Blockade() : Order(),target(nullptr) {}
-Blockade::Blockade(Player *owner, Territory * target): Order(owner), target(target){}
+Blockade::Blockade(Player *owner, Territory * target): Order(owner), target(target) {}
+
+Blockade::~Blockade() {}
 
 Blockade::Blockade(const Blockade& b):Order(b){
 	this->target = new Territory(*b.target);
@@ -268,10 +310,17 @@ Blockade &Blockade::operator=(const Blockade &b) {
 	return *this;
 }
 
+ostream &operator<<(ostream &out, const Blockade &b) {
+	return out << "Blockade order:" << endl 
+	<< "is_executed: " << b.if_executed << endl
+	<< "effect: " << b.effect << endl;
+}
+
+
 // Methods ---------------------
 bool Blockade::validate() {
 	if (!owner->territory_belong(target)) {
-		cout << "invalid blockade: territory "  << target->getName() << " belongs to enemy of player " << owner->getName() << endl;
+		cout << "invalid blockade: target territory "  << target->getName() << " doesn't belong to player " << owner->getName() << endl;
 		return false;
 	}
 
@@ -283,7 +332,12 @@ void Blockade::execute() {
 		// number of army units on the territory is doubled
 		target->setNbArmies(target->getNbArmies()*2);
 		// ownership of the territory is transferred
+		target->setOwner(new Player());
 		owner->remove_territory(target);
+		if_executed = true;
+		effect = "blockade: number of amies on territory " + target->getName() + " has been doubled, it now has " + to_string(target->getNbArmies()) 
+					+ " armies, ownership transfer to a Neutral player";
+		cout << effect << endl;
 	}
 }
 
@@ -293,6 +347,8 @@ void Blockade::execute() {
 // Constructors ----------------
 Negotiate::Negotiate() : Order(), target(nullptr) {}
 Negotiate::Negotiate(Player *owner, Player * target): Order(owner), target(target){}
+
+Negotiate::~Negotiate() {}
 
 Negotiate::Negotiate(const Negotiate& n):Order(n){
 	this->target = new Player(*n.target);
@@ -306,6 +362,12 @@ Negotiate &Negotiate::operator=(const Negotiate &n) {
 	return *this;
 }
 
+ostream &operator<<(ostream &out, const Negotiate &n) {
+	return out << "Negotiate order:" << endl 
+	<< "is_executed: " << n.if_executed << endl
+	<< "effect: " << n.effect << endl;
+}
+
 
 // Methods ---------------------
 bool Negotiate::validate() {
@@ -315,7 +377,7 @@ bool Negotiate::validate() {
 		return false;
 	}
 	if (!owner->if_can_attack(target)) {
-		cout << "invalid negotiate: negotiated" << endl;
+		cout << "invalid negotiate: previous negotiation between " << owner->getName() << " and " << target->getName() << endl;
 		return false;
 	}
 	return true;
@@ -325,39 +387,45 @@ void Negotiate::execute() {
 	if (validate()) {
 		this->owner->add_no_attack(target);
 		target->add_no_attack(this->owner);
+		if_executed = true;
+		effect = "negotiate: " + target->getName() + " and " + owner->getName() + " are added to each other's negotiated list";
+		cout << effect << endl;
 	} 
 }
 
 //	------------------ OrdersList ------------------ 
 // Constructors ----------------
 OrdersList::OrdersList() {
-	vector<Order *> my_ol;
+	vector<Order *> tmp;
+	this->my_ol = &tmp;
+
 }
 OrdersList::OrdersList(const OrdersList& ol) {
-	for (auto order : ol.my_ol) {
+	for (auto order : *ol.my_ol) {
 		Deploy* d = dynamic_cast<Deploy*>(order);
-		this->my_ol.push_back(new Deploy(*d));
+		this->my_ol->push_back(new Deploy(*d));
 	}
 }
 OrdersList::~OrdersList() {
-	for (auto order : my_ol) {
+	for (auto order : *my_ol) {
 		delete order;
 	}
+	delete my_ol;
 }
 
 // Methods ---------------------
 // position is zero indexed
 void OrdersList::remove(int pos) {
-	my_ol.erase(my_ol.begin()+pos);
+	my_ol->erase(my_ol->begin()+pos);
 }
 
 void OrdersList::move(int new_pos, int prev_pos) {
-	my_ol.insert (my_ol.begin() + new_pos, my_ol.at(prev_pos));
-	my_ol.erase(my_ol.begin() +prev_pos);
+	my_ol->insert (my_ol->begin() + new_pos, my_ol->at(prev_pos));
+	my_ol->erase(my_ol->begin() +prev_pos);
 }
 
 void OrdersList::add(Order *o) {
-	my_ol.push_back(o);
+	my_ol->push_back(o);
 }
 
 

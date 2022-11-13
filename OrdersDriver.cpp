@@ -87,16 +87,6 @@ Continent testloadMaps() {
     Continent c1 = m.continents->at(0);
     return c1;
 
-    
-    // string* s = new string(*c1.Cname);
-    // int* s1 = new int(*c1.nbPts);
-    // cout << "Continent name is : " << *s <<endl << "Number of points : " << *s1 << endl << "Territories are : ";
-    // cout << *c1.territories->at(0).Tname;
-    // for (int j=1;j<c1.territories->size();j++){
-    //     cout << ", "<<  *c1.territories->at(j).Tname;
-    // }
-    // cout << "." << endl << endl;
-    // return 0;
 }
 
 

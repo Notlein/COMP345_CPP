@@ -76,24 +76,29 @@ ostream &operator<<(ostream &out, const Player &p) {
     return out;
 }
 
-void Player::toAttack()
-{
-    for (int i = 0; i < territories->size(); i++)
-    {
-       // cout << *territories[i] << " ";
-    }
+vector<Territory*>* Player::toAttack(){
+    vector<Territory*>* attackList = new vector<Territory*>();
+	
+	// for (auto t : *this->territories) {
+	// 	for (auto adjt : t->getAdjacentTerritories()) {
+    //         bool own = false;
+	// 		for (auto t2 : *this->territories) {
+    //             if (t2->getName() == adjt) {
+    //                 own = true;
+    //             }
+	// 	    }
+    //         if (!own) {
+    //             attackList
+    //         }
+	//     }
+    // }
 }
 
-void Player::toDefend()
-{
-    for (int i = 0; i < territories->size(); i++)
-    {
-       // cout << *territories[i] << "\n";
-    }
-
+vector<Territory*> * Player::toDefend() {
+    return this->territories;
 }
-void Player::issueOrder()
-{
+
+void Player::issueOrder() {
     // Order *o = new Order();
     // orders->add(o);
 
@@ -102,7 +107,7 @@ void Player::issueOrder()
 string Player::getName() {
     return this->name;
 }
- void Player::set_received_card(bool v) {
+void Player::set_received_card(bool v) {
     this->received_card = v;
  }
 

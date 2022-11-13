@@ -22,6 +22,7 @@ class Order {
 		// Constructors ---------
 		// default constructor
 		Order();	
+		~Order();
 		Order(Player * owner);	
 		// copy constructor					
 		Order(const Order &o); 
@@ -48,6 +49,7 @@ class Deploy : public Order {
 	public:
 		// Constructors ----------------
 		Deploy();
+		~Deploy();
 		Deploy(Player * owner, int num_army, Territory * target);	
 		// copy constructor
 		Deploy(const Deploy & d);
@@ -76,6 +78,7 @@ class Advance : public Order {
 	public:
 		// Constructors ----------------
 		Advance();
+		~Advance();
 		Advance(Player * owner, int num_army, Territory * source, Territory * target);	
 		// copy constructor		   
 		Advance(const Advance &a); 
@@ -102,6 +105,7 @@ class Airlift : public Order {
 	public:
 		// Constructors ----------------
 		Airlift();
+		~Airlift();
 		Airlift(Player *owner, int my_num_army, Territory * source, Territory * target);		
 		// copy constructor		   
 		Airlift(const Airlift &a); 
@@ -125,6 +129,7 @@ class Bomb : public Order {
 	public:
 		// Constructors ----------------
 		Bomb();	
+		~Bomb();
 		Bomb(Player *owner, Territory * target);	
 		// copy constructor		   
 		Bomb(const Bomb &b); 
@@ -148,6 +153,7 @@ class Blockade : public Order {
 	public:
 		// Constructors ----------------
 		Blockade();	
+		~Blockade();
 		Blockade(Player *owner, Territory * target);	
 		// copy constructor		   
 		Blockade(const Blockade &b); 
@@ -173,6 +179,7 @@ class Negotiate : public Order {
 	public:
 		// Constructors ----------------
 		Negotiate();	
+		~Negotiate();
 		Negotiate(Player *owner, Player * target);
 		// copy constructor		   
 		Negotiate(const Negotiate &n);
@@ -202,7 +209,7 @@ class OrdersList {
 		void add(Order *o);
 
 	private:
-		vector<Order *> my_ol;
+		vector<Order *> *my_ol;
 
 
 };

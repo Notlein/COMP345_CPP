@@ -20,8 +20,8 @@ public:
     friend ostream &operator<<(ostream &out, const Player &player);
 
 
-    void toDefend();
-    void toAttack();
+    vector<Territory*> * toDefend();
+    vector<Territory*> * toAttack();
     void issueOrder();
 
     // vector<Orders *> getOrderList();

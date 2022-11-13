@@ -50,6 +50,9 @@
         "deque": "cpp",
         "queue": "cpp",
         "regex": "cpp",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "array": "cpp",
+        "unordered_map": "cpp",
+        "string_view": "cpp"
     }
 }
