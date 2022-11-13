@@ -42,18 +42,16 @@ Player::~Player() {
 	}
     delete territories;
     delete noAttack;
-    delete hand;
-    delete orders;
 
 }
 
-Player::Player(int reinforcement, string playerName, vector<Territory*> *territories,vector<Player*> *noAttack, const Hand & hand, const OrdersList & ol) {
+Player::Player(int reinforcement, string playerName, vector<Territory*> *territories,vector<Player*> *noAttack, Hand * hand, OrdersList * ol) {
     this->reinforcement = reinforcement;
     this->name = playerName;
     this->territories = territories;
     this->noAttack = noAttack;
-    this->hand = new Hand(hand);
-    this->orders = new OrdersList(ol);
+    this->hand = hand;
+    this->orders = ol;
     this->received_card = false;
 }
 
@@ -111,6 +109,10 @@ void Player::set_received_card(bool v) {
     this->received_card = v;
  }
 
+bool Player::get_received_card() {
+    return received_card;
+}
+
 bool  Player::territory_belong(Territory * target) {
     if (find(territories->begin(), territories->end(), target) != territories->end()) {
         return true;
@@ -147,3 +149,15 @@ bool Player::if_can_attack(Player * p) {
     }
     return true; 
 };
+
+void Player::set_reinforcement(int i){
+    this->reinforcement=i;
+}
+
+int Player::get_reinforcement(){
+    return this->reinforcement;
+}
+
+// void Player::player_draw_card() {
+//     string c = this->hand->draw();
+// }

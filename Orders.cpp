@@ -9,21 +9,21 @@ using namespace std;
 
 //	------------------ Order --------------------------
 
-// Defualt Constructor
+// Default Constructor
 Order::Order() { 	
 	this->if_executed = false;
 	this->effect = "no effect";
 	this->owner = nullptr;
 }
-
+// Parameterized Constructor
 Order::Order(Player * owner) {
 	this->if_executed = false;
 	this->effect = "no effect";
 	this->owner = owner;
 }
 
+// Destructor
 Order::~Order() {}
-
 
 // Copy Constructor
 Order::Order(const Order &o) { 
@@ -49,20 +49,22 @@ ostream &operator<<(ostream &out, const Order &o) {
 
 
 //	------------------ Deploy ------------------ 
-// default constructor
+// Default Constructor
 Deploy::Deploy() : Order(), my_num_army(0), my_target(nullptr){}
 
+// Parameterized Constructor
 Deploy::Deploy(Player * owner, int num_army, Territory * target) : Order(owner), my_num_army(num_army), my_target(target) {}
 
+// Destructor
 Deploy::~Deploy() {}
 
-// copy constructor
+// Copy constructor
 Deploy::Deploy(const Deploy& d):Order(d){
 	this->my_num_army = d.my_num_army;
 	this->my_target = new Territory(*d.my_target);
 }
 
-// Assignment Operator ---------
+// Assignment Operator 
 Deploy &Deploy::operator=(const Deploy &d) {
 	Order::operator=(d);
 	this->my_num_army = d.my_num_army;
@@ -70,6 +72,7 @@ Deploy &Deploy::operator=(const Deploy &d) {
 	return *this;
 }
 
+// Stream insertion operator
 ostream &operator<<(ostream &out, const Deploy &d) {
 	return out << "Deploy order:" << endl 
 	<< "is_executed: " << d.if_executed << endl
@@ -78,16 +81,22 @@ ostream &operator<<(ostream &out, const Deploy &d) {
 
 // Methods ---------------------
 bool Deploy::validate() {
+	// checks if the terryitory belongs to the player that issued the order
 	return owner->territory_belong(my_target);	
 }
 
 void Deploy::execute() {
+	// adds the selected number of army units from the reinforcement pool to the target territory
+	// if the target territory belongs to the player
 	if (validate()) {
 		*(my_target->nbArmies) = *(my_target->nbArmies) + my_num_army;
+		// remove the selected number of army units from the reinforcement pool after it is added to the territory
+		owner->set_reinforcement(owner->get_reinforcement()-my_num_army);
 		if_executed = true;
 		effect = to_string(my_num_army) + " armies have been added to territory " + *my_target->Tname;
 		cout << effect << endl;
 	} else {
+		// the order is invalid if the target territory does not belong to the player
 		cout << "invalid deploy:" << *my_target->Tname << " doesn't belong to player " << owner->getName() << endl;
 	}
 
@@ -95,10 +104,13 @@ void Deploy::execute() {
 
 //	------------------ Advance ------------------ 
 
-// Constructors ----------------
+// Default Constructor
 Advance::Advance() : Order(), my_num_army(0), source(nullptr), target(nullptr) {}
+
+// Parameterized Constructor
 Advance::Advance(Player * owner, int num_army, Territory * source, Territory * target) : Order(owner), my_num_army(num_army), source(source), target(target){}
 
+// Destructor
 Advance::~Advance() {}
 
 Advance::Advance(const Advance& a):Order(a){
@@ -143,6 +155,7 @@ bool Advance::validate() {
 		cout << "invalid advance: territory " << tgt_name << " and " << "territory "<< source->getName() << " are not adjacent " << endl;
         return false;
     }
+
 	return true;
 }
 
@@ -170,8 +183,17 @@ void Advance::execute() {
 			if (target->getNbArmies() == 0) {
 				target->setOwner(owner);
 				target->setNbArmies(my_num_army);
-				target->getOwner()->set_received_card(true);
-				effect = "attacking player " + source->getOwner()->getName() + " won the attack, with " + to_string(my_num_army) + " armies remaining";
+				// draw a card if player haven't receive card for thisturn
+
+				effect = "attacking player " + source->getOwner()->getName() + " won the attack, with " + to_string(my_num_army) + " armies remaining.";
+				if (!target->getOwner()->get_received_card()) {
+					target->getOwner()->set_received_card(true);
+					// owner->player_draw_card();
+					effect += "player will receive a card at the end of his turn";
+
+				} else {
+					effect += "player has already conquered at least one territory";
+				}
 				cout << effect << endl;
 			} else {
 				effect = "defending player " + target->getOwner()->getName() + " won the attack, with " + to_string(target->getNbArmies()) <+ " armies remaining";
@@ -185,10 +207,13 @@ void Advance::execute() {
 
 //	------------------ Airlift ------------------ 
 
-// Constructors ----------------
+// Default Constructor
 Airlift::Airlift() : Order(), my_num_army(0), source(nullptr), target(nullptr) {}
+
+// Parameterized Constructor
 Airlift::Airlift(Player *owner, int my_num_army, Territory * source, Territory * target): Order(owner), my_num_army(my_num_army), source(source), target(target){}
 
+// Destructor
 Airlift::~Airlift() {}
 
 Airlift::Airlift(const Airlift& a):Order(a){
@@ -239,11 +264,13 @@ void Airlift::execute() {
 
 //	------------------ Bomb ------------------ 
 
-// Constructors ----------------
+// Default Constructor
 Bomb::Bomb() : Order(),target(nullptr) {}
 
+// Parameterized Constructor
 Bomb::Bomb(Player *owner, Territory * target): Order(owner), target(target){}
 
+// Destructor
 Bomb::~Bomb() {}
 
 Bomb::Bomb(const Bomb& b):Order(b) {
@@ -293,10 +320,13 @@ void Bomb::execute() {
 
 //	------------------ Blockade ------------------ 
 
-// Constructors ----------------
+// Default Constructor
 Blockade::Blockade() : Order(),target(nullptr) {}
+
+// Parameterized Constructor
 Blockade::Blockade(Player *owner, Territory * target): Order(owner), target(target) {}
 
+// Destructor
 Blockade::~Blockade() {}
 
 Blockade::Blockade(const Blockade& b):Order(b){
@@ -344,10 +374,13 @@ void Blockade::execute() {
 
 //	------------------ Negotiate ------------------
 
-// Constructors ----------------
+// Default Constructor
 Negotiate::Negotiate() : Order(), target(nullptr) {}
+
+// Parameterized Constructor
 Negotiate::Negotiate(Player *owner, Player * target): Order(owner), target(target){}
 
+// Destructor
 Negotiate::~Negotiate() {}
 
 Negotiate::Negotiate(const Negotiate& n):Order(n){
@@ -394,7 +427,7 @@ void Negotiate::execute() {
 }
 
 //	------------------ OrdersList ------------------ 
-// Constructors ----------------
+// Default Constructor
 OrdersList::OrdersList() {
 	vector<Order *> tmp;
 	this->my_ol = &tmp;
@@ -406,6 +439,8 @@ OrdersList::OrdersList(const OrdersList& ol) {
 		this->my_ol->push_back(new Deploy(*d));
 	}
 }
+
+// Destructor
 OrdersList::~OrdersList() {
 	for (auto order : *my_ol) {
 		delete order;
