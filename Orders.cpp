@@ -463,5 +463,11 @@ void OrdersList::add(Order *o) {
 	my_ol->push_back(o);
 }
 
+vector<Order *>* OrdersList::get_OrderList(){
+
+	return my_ol;
+
+}
+
 
 

@@ -102,7 +102,7 @@ void Player::issueOrder() {
 
     while(reinforcement > 0 ){
 
-        orders.push_back(new Deploy);
+        orders -> add(new Deploy);
         reinforcement--;
 
     }
@@ -110,39 +110,39 @@ void Player::issueOrder() {
     cout << name << "Has no more reinforcements to deploy\n";
     //for each turn, each player issues an order from one card in thier hand, if their hand is not empty.
 
-    if(!*hand.empty()){
+    if(hand->displayNumOfCards() > 0){
 
-        cout << *name << "Is now issuing an order from a car in their hand: ";
+        cout << name << "Is now issuing an order from a car in their hand: ";
 
-        if (*(*hand[0].card_type) == "Airlift"){
+        if (*(*hand[0].card_type) == " Airlift"){
 
-            orders.push_back(new Airlift);
+            orders->add(new Airlift);
             //*hand[0].delete
-            cout << *name << "Airlift card\n";
+            cout << name << " Airlift card\n";
 
         }
 
         else if (*(*hand[0].card_type) == "Bomb"){
 
-            orders.push_back(new Bomb);
+            orders->add(new Bomb);
             //*hand[0].delete
-            cout << *name << "Bomb card\n";
+            cout << name << " Bomb card\n";
 
         }
 
         else if (*(*hand[0].card_type) == "Blockade"){
 
-            orders.push_back(new Blockade);
+            orders->add(new Blockade);
             //*hand[0].delete
-            cout << *name << "Blockade card\n";
+            cout << name << " Blockade card\n";
 
         }
 
         else if (*(*hand[0].card_type) == "Negotiate"){
 
-            orders.push_back(new Negotiate);
+            orders->add(new Negotiate);
             //*hand[0].delete
-            cout << *name << "Negotiate card\n";
+            cout << name << " Negotiate card\n";
 
         }
 
@@ -155,10 +155,16 @@ void Player::issueOrder() {
 
     //Finally, for each turn, each player issues one advance order.
 
-    cout << *name << "Is now issuing an advance order\n\n";
-    orders.push_back(new Advance);
+    cout << name << "Is now issuing an advance order\n\n";
+    orders->add(new Advance);
 
-    cout << *name <<"'s issue orders phase is complete for this turn\n\n========\n\n";
+    cout << name <<"'s issue orders phase is complete for this turn\n\n========\n\n";
+
+}
+
+OrdersList* Player::get_orders(){
+
+    return orders;
 
 }
 

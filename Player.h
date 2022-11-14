@@ -36,6 +36,7 @@ public:
     bool get_received_card();
     void set_reinforcement(int i);
     int get_reinforcement();
+    OrdersList* get_orders();
     // void player_draw_card();
 
 private:

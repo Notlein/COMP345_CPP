@@ -207,6 +207,7 @@ class OrdersList {
 		void remove(int pos);
 		void move(int new_pos, int prev_pos);
 		void add(Order *o);
+		vector<Order *>* get_OrderList();
 
 	private:
 		vector<Order *> *my_ol;

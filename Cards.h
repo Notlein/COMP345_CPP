@@ -64,7 +64,7 @@ public:
 
   void set_card(string);
 
-  void displayNumOfCards();
+  int displayNumOfCards();
 
   void displayHandCards();
 

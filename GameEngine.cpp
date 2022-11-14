@@ -9,6 +9,16 @@
 #include "Player.h"
 using namespace std;
 
+vector<Player *> players;
+/*
+Player player1 = Player(50, "george", &tett1, &pl1, &hand1, &ol1);
+Player player2 = Player(50, "greg", &tett2, &pl1, &hand2, &ol1);
+Player player3 = Player(50, "ann", &tett3, &pl1, &hand3, &ol1);
+Player player4 = Player(50, "monkey", &tett4, &pl1, &hand4, &ol1);
+Player player5 = Player(50, "ya mama", &tett5, &pl1, &hand5, &ol1);
+Player player6 = Player(50, "padre", &tett6, &pl1, &hand6, &ol1);
+*/
+
 // constructor
 GameEngine::GameEngine()
 {
@@ -170,14 +180,14 @@ void GameEngine::changeState(string *input)
 
 int reinforcementPhase(){
 
-  for(Player * player : *players){
+  for(Player * player : players){
 
 
     //print how many reinforcements the current player has to test: 
-    cout << "Player " << player -> name << " currently has " << player -> reinforcementPool << "reinforcements available at the begining of their turn.\n";
+    cout << "Player " << player -> getName() << " currently has " << player -> get_reinforcement() << "reinforcements available at the begining of their turn.\n";
 
     //take count of players territories:
-    int terrCount = player -> toDefend().size();
+    int terrCount = player -> toDefend()->size();
 
     //divide by 3.0:
     double reinforcementDouble = floor(double(terrCount)/3.0);
@@ -192,10 +202,10 @@ int reinforcementPhase(){
     }
 
     //continued test
-    cout << "Player " << player -> name << " currently has " << terrCount << "territories, so they will recieve " << reinforcementInt << "reinforcements.\n";
-    cout << "Player " << player -> name << " currently has " << player -> reinforcementPool << "reinforcements available at the end of the reinforcement phase of their turn.\n\n\n";
+    cout << "Player " << player -> getName() << " currently has " << terrCount << "territories, so they will recieve " << reinforcementInt << "reinforcements.\n";
+    cout << "Player " << player -> getName() << " currently has " << player -> get_reinforcement() << "reinforcements available at the end of the reinforcement phase of their turn.\n\n\n";
 
-    player -> reinforcementPool += reinforcementInt;
+    player -> set_reinforcement(player->get_reinforcement() + reinforcementInt);
   
   }
 
@@ -206,9 +216,9 @@ int issueOrdersPhase(){
   //for each turn, each player issues a certain number of deploy order, an order for each card they currently have, as well as one advance order.
   //Please see the implementation in Player::issueOrder()
 
-  for(Player player : *players){
+  for(Player * player : players){
 
-    player.issueOrder();
+    player->issueOrder();
   
   }
 
@@ -222,13 +232,16 @@ int executeOrdersPhase(){
 
   while(!finished){
 
-    for(Player player : *players){
+    for(Player * player : players){
     
-      if(player.orders[0] != nullptr){
+      OrdersList* playerOrderList = player->get_orders();
+      vector<Order *>* playersOrders = playerOrderList->get_OrderList(); 
+
+      if(playersOrders[0] != nullptr){
 
         hasOrder = true;
-        player.orders[0].execute;
-        player.orders.erase(0);
+        playersOrders[0].execute;
+        playersOrders.erase(0);
 
       }
     
@@ -247,7 +260,7 @@ int executeOrdersPhase(){
   
 void mainGameLoop(){
 
-  while(players -> size() > 1){
+  while(players.size() > 1){
 
     cout << "\n================";
     cout << "\nNEW TURN";
@@ -258,11 +271,11 @@ void mainGameLoop(){
     executeOrdersPhase();
 
     //if a player has no more territories to defend by the end of the turn, they are eliminated from the game:
-    for(Player player : *players){
+    for(int i = 0; i < players.size(); i++){
 
-      if (player->toDefend().empty()){
+      if (*(players[i])->toDefend().empty()){
 
-        cout << "Player " << player.name << " has no more territories at the end of this turn, so they are eliminated."
+        cout << "Player " << player->getName() << " has no more territories at the end of this turn, so they are eliminated.";
         *players.erase(player);
 
       }
