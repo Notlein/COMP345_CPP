@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -63,8 +62,6 @@ public:
 	// initial the deck vec, assign 30 cards in it, each type has 5 cards.
 	void initial_vec_deck();
 
-	// test to print the all card of initial vec_deck
-	void print_vec_deck();
 	// print the size of vec_dec
 	void print_vec_deck_size();
 

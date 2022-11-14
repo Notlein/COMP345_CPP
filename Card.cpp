@@ -85,7 +85,6 @@ Deck::Deck(const Deck & d)
 
 Deck & Deck::operator=(const Deck & d)
 {
-	// TODO: insert return statement here
 	this->vec_deck = *new vector<Card*>( d.vec_deck);
 	this->ptr_card = new Card(*(d.ptr_card));
 	this->temp_card = new Card(*(d.temp_card));
@@ -94,7 +93,7 @@ Deck & Deck::operator=(const Deck & d)
 
 void Deck::initial_vec_deck()
 {
-	//assign 30 cards in vec, each type has 5 cards, including 6 types.
+	
 	for (int i = 0; i < 5; i++) {
 		for(int j=0; j<5; j++)
 		{
@@ -128,7 +127,6 @@ void Deck::initial_vec_deck()
 		
 		}
 		
-		
 	}
 	cout << ("Deck Cards is initialized\n") <<endl;
 }
@@ -139,25 +137,16 @@ void Deck::print_vec_deck_size()
 	
 }
 
-void Deck::print_vec_deck()
-{
-	cout << ("\n The current vec_deck contains ") << vec_deck.size() << (" cards. \n") << endl;
-	for (int i = 0; i < vec_deck.size(); i++) {
-		cout << ("  # ")<<i << (" card is ") << *vec_deck.at(i)->get_card_type() << endl;
-	}
-}
+
 
 Card* Deck::draw()
 {
-	//draw randomly from the remaining of the deck
+	
 	srand(time(NULL)); //initial random seed
 
-	//random is from 0 to the size of current vec_deck, [0, size). (rand()%(b-a))+a is [a,b).
+	
 	int temp_size = vec_deck.size();
 	int temp = (rand() % temp_size);
-	
-	//test the random int
-	//cout << "temp is " << temp << endl;
 	
 	temp_card = vec_deck.at(temp);
 
@@ -181,7 +170,6 @@ HandCards::HandCards()
 
 HandCards::~HandCards()
 {
-	//destruct
 }
 
 HandCards::HandCards(const HandCards & h)
@@ -256,7 +244,6 @@ void HandCards::return_played_card_to_deck(Deck* a_Deck)
 		//add the played card of vec_play_cards to Deck cards
 		a_Deck->add_card_to_deck_vec(vec_play_cards.at(n));
 	}
-	
 }
 
 vector<Card*>* HandCards::get_vec_hand_cards()

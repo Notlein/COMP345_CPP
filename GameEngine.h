@@ -1,17 +1,19 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
+class Player;
 
 class GameEngine {
 
 private:
     string *curr_state;
-
     // setState modifies the value of curr_state
     void setState(string *new_state);
-
+    
 public:
+    vector <Player *> player;
     // default constructor
     GameEngine();
     // copy constructor
@@ -27,5 +29,5 @@ public:
     void changeState(string *input);
 
     // ---------------Assignment 2 ---------------- //
-    void startupPhase();
+    void startupPhase(vector<Player*>player);
 };

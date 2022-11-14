@@ -5,7 +5,7 @@
 #include "Card.h"
 #include "Orders.h"
 #include <vector>
-using namespace  std;
+using namespace std;
 
 // constructor
 GameEngine::GameEngine()
@@ -14,6 +14,7 @@ GameEngine::GameEngine()
   string *str = new string("start");
   curr_state = str;
   cout << "State set to " << *str << endl;
+  vector<Player *> player;
 }
 
 // copy constructor
@@ -166,7 +167,7 @@ void GameEngine::changeState(string *input)
   }
 }
 
-void GameEngine::startupPhase()
+void GameEngine::startupPhase(vector<Player *> player)
 {
   // Adjacent map
   vector<vector<string> > map;
@@ -181,33 +182,12 @@ void GameEngine::startupPhase()
   bool GameStart = false;
   bool startPhase = false;
 
-  vector<Territory *> tett1;
-  vector<Territory *> tett2;
-  vector<Territory *> tett3;
-  vector<Territory *> tett4;
-  vector<Territory *> tett5;
-  vector<Territory *> tett6;
-
-  Player player1;
-  Player player2;
-  Player player3;
-  Player player4;
-  Player player5;
-  Player player6;
-
-  vector<Card *> card1;
-  vector<Card *> card2;
-  vector<Card *> card3;
-  vector<Card *> card4;
-  vector<Card *> card5;
-  vector<Card *> card6;
-
-  vector<Player *> pl1;
-  OrdersList ol1 = OrdersList();
-
+  // Initizlie deck why not
   Deck aDeck;
   aDeck.initial_vec_deck();
+
   int maploadCount = 0;
+  // You have three options to start UI.
   while (!startPhase)
   {
     int accessSwitch = 0;
@@ -223,6 +203,7 @@ void GameEngine::startupPhase()
       GameStart = false;
     getline(cin, input);
 
+    // thsese switches will assign to the map that user wants.
     if (input == "loadmap option")
     {
       accessSwitch = 1;
@@ -240,6 +221,7 @@ void GameEngine::startupPhase()
 
     switch (accessSwitch)
     {
+      // case 1 is option for the maps
     case 1:
       while (!GameStart)
       {
@@ -249,7 +231,7 @@ void GameEngine::startupPhase()
              << "2. ./maps/Quebec.map\n"
              << "3. ./maps/Honeycomb.map\n";
         getline(cin, loading);
-
+        // user chooses 1 to load grand montreal map
         if (loading == "loadmap ./maps/Grand Montreal.map")
         {
           switchNum = 1;
@@ -259,6 +241,7 @@ void GameEngine::startupPhase()
           GameStart = true;
           maploadCount++;
         }
+        // user chooses 2 to load Quebec map
         else if (loading == "loadmap ./maps/Quebec.map")
         {
           switchNum = 2;
@@ -268,7 +251,7 @@ void GameEngine::startupPhase()
           GameStart = true;
           maploadCount++;
         }
-
+        // user chooses 3 to load honey comb map
         else if (loading == "loadmap ./maps/Honeycomb.map")
         {
           switchNum = 3;
@@ -279,6 +262,7 @@ void GameEngine::startupPhase()
           maploadCount++;
         }
 
+        // this switch lets to access the map and assign the adjacent map to whichever user choosed in the last command.
         switch (switchNum)
         {
         case 0:
@@ -291,6 +275,7 @@ void GameEngine::startupPhase()
           attempts++;
           break;
         case 1:
+          // loads the map
           map = LoadMaps(1);
           break;
         case 2:
@@ -303,7 +288,7 @@ void GameEngine::startupPhase()
         cout << endl;
       }
       break;
-
+      // Case 2 validates map by checking if all the territories are connected.
     case 2:
       for (string x : stringList)
       {
@@ -339,7 +324,7 @@ void GameEngine::startupPhase()
           cout << "Map validation initiated:";
           cout << endl;
           bool val = m.validate();
-
+          // Checks if there an error with path
           if (m.getNbContinents() < 1)
           {
             std::cerr << endl
@@ -348,6 +333,7 @@ void GameEngine::startupPhase()
                       << "********************\n"
                       << "There is a problem in the map syntax : Please verify the .map file" << endl;
           }
+          // checks if map is not correctly connected
           else if (!val)
           {
             std::cerr << endl
@@ -357,6 +343,7 @@ void GameEngine::startupPhase()
                       << "There is a problem in the map. It's not a proper connected graph." << endl;
           }
           else
+          // when map is valid.
           {
             std::cout << "Succesful map created" << endl
                       << "********************\n"
@@ -367,6 +354,7 @@ void GameEngine::startupPhase()
           map = v;
           m.~Map();
         }
+        // invalid map file
         catch (const std::exception &e)
         {
           std::cerr << "INVALID MAP FILE" << endl
@@ -379,208 +367,77 @@ void GameEngine::startupPhase()
         }
       }
       break;
-
+      // where user adds players.
     case 3:
     {
-      int numPlayer = 0;
+
+      // intialize orders list hand and territory objects that will assign to the player
+      OrdersList ol1 = OrdersList();
+      vector<Player *> pl1;
+      HandCards hand1 = HandCards();
+      Territory *t1;
+
       bool switchPlayer = false;
-
-      cout << "How many players do you want to add? ( 2 ~ 6 )" << endl;
-
-      while (!switchPlayer)
-      {
-        cout << "Input: ";
-        cin >> numPlayer;
-        if (numPlayer < 7 && numPlayer > 1)
-        {
-          switchPlayer = true;
-        }
-      }
-
-      int sizeofarray = numPlayer;
-      int nubersArray[sizeofarray];
-      int n = sizeofarray, r, result;
-      int getRandNum[sizeofarray];
-      int arr[sizeofarray];
-      for (int i = 0; i < sizeofarray; i++)
-      {
-        arr[i] = i;
-      }
-
-      for (int i = 0; i < sizeofarray; i++)
-      {
-        cout << arr[i] << " ";
-      }
-
-      cout << endl;
+      // number of territory will be evenly distributed to the players
       int tettDistribute1 = 0;
       int tettDistribute2 = 0;
 
-      for (int i = 0; i < numPlayer; i++)
+      // count of player
+      int totalPlayer = 0;
+
+      // in an excapable while loop
+      while (!switchPlayer)
       {
-
-        switch(arr[i])
+        if (totalPlayer >= 2)
         {
-        case 0:
-        {
-          string namePlayer1;
-          cout << "Enter the name of the player:" << endl;
-          cin >> namePlayer1;
-          
-          HandCards hand1 = HandCards();
-          hand1.set_vec_hand_cards(aDeck.draw());
-          hand1.set_vec_hand_cards(aDeck.draw());
-          
-          
-          hand1.print_vec_hand_cards();
-          
-          
-          Territory t1; 
-          
-          for (; tettDistribute1 < map.size() / numPlayer; tettDistribute1++)
+          string ans;
+          cout << "Do you wanna stop creating player(s)? yes/no\n";
+          cin >> ans;
+          if (ans != "no")
           {
-            for (; tettDistribute2 < map[tettDistribute1].size(); tettDistribute2++)
-            {
-              t1 = Territory(&map[tettDistribute1][tettDistribute2]);
-              tett1.push_back(&t1);
-              
-            }
+            switchPlayer = true;
+            break;
           }
-    
-          player1 = Player(50, namePlayer1, &tett1, &pl1, &hand1, &ol1);
-          
-          break;  
         }
-        
-        case 1:
+        totalPlayer++;
+
+        // user inputs name of player
+        string namePlayer1;
+        cout << "Enter the name of the player:" << endl;
+        cin >> namePlayer1;
+        // draws two cards from the deck
+        hand1.set_vec_hand_cards(aDeck.draw());
+        hand1.set_vec_hand_cards(aDeck.draw());
+        // vector pointer to territory
+        vector<Territory *> tet;
+
+        // this will everly distribute the number of territories,
+        for (; tettDistribute1 < map.size() / 6; tettDistribute1++)
         {
-          string namePlayer1;
-          cout << "Enter the name of the player:" << endl;
-          cin >> namePlayer1;
-          HandCards hand2 = HandCards();
-          hand2.set_vec_hand_cards(aDeck.draw());
-          hand2.set_vec_hand_cards(aDeck.draw());
-          
-
-          for (; tettDistribute1 < map.size() / numPlayer; tettDistribute1++)
+          for (; tettDistribute2 < map[tettDistribute1].size(); tettDistribute2++)
           {
-            for (; tettDistribute2 < map[tettDistribute1].size(); tettDistribute2++)
-            {
-              // cout << map[i][j];
-              Territory t1 = Territory(&map[tettDistribute1][tettDistribute2]);
-              tett2.push_back(&t1);
-            }
+
+            t1 = new Territory(&map[tettDistribute1][tettDistribute2]);
+            tet.push_back(t1);
           }
+        }
+        // initialize the potiner to a player
+        Player *player1 = new Player(50, namePlayer1, &tet, &pl1, &hand1, &ol1);
+        // and push the pointer to player to the pointer to player vector.
+        player.push_back(player1);
 
-
-         player2 = Player(50, namePlayer1, &tett2, &pl1, &hand2, &ol1);
-
+        // when number of players are 6 it exits
+        if (totalPlayer == 6)
+        {
+          cout << "You have maximum players \n";
+          switchPlayer = true;
           break;
-        }
-        case 2:
-        {
-          string namePlayer1;
-          cout << "Enter the name of the player:" << endl;
-          cin >> namePlayer1;
-          HandCards hand3 = HandCards();
-          hand3.set_vec_hand_cards(aDeck.draw());
-          hand3.set_vec_hand_cards(aDeck.draw());
-         
-
-          for (; tettDistribute1 < map.size() / numPlayer; tettDistribute1++)
-          {
-            for (; tettDistribute2 < map[tettDistribute1].size(); tettDistribute2++)
-            {
-              Territory t1 = Territory(&map[tettDistribute1][tettDistribute2]);
-              tett3.push_back(&t1);
-            }
-          }
-
-        
-
-         player3 = Player(50, namePlayer1, &tett3, &pl1, &hand3, &ol1);
-
-          break;
-        }
-        case 3:
-        {
-          string namePlayer1;
-          cout << "Enter the name of the player:" << endl;
-          cin >> namePlayer1;
-          HandCards hand4 = HandCards();
-          hand4.set_vec_hand_cards(aDeck.draw());
-          hand4.set_vec_hand_cards(aDeck.draw());
-          
-
-          for (; tettDistribute1 < map.size() / numPlayer; tettDistribute1++)
-          {
-            for (; tettDistribute2 < map[tettDistribute1].size(); tettDistribute2++)
-            {
-              // cout << map[i][j];
-              Territory t1 = Territory(&map[tettDistribute1][tettDistribute2]);
-              tett4.push_back(&t1);
-            }
-          }
-
-
-          player4 = Player(50, namePlayer1, &tett4, &pl1, &hand4, &ol1);
-
-          break;
-        }
-        case 4:
-        {
-          string namePlayer1;
-          cout << "Enter the name of the player" << endl;
-          cin >> namePlayer1;
-          HandCards hand5 = HandCards();
-          hand5.set_vec_hand_cards(aDeck.draw());
-          hand5.set_vec_hand_cards(aDeck.draw());
-          
-
-          for (; tettDistribute1 < map.size() / numPlayer; tettDistribute1++)
-          {
-            for (; tettDistribute2 < map[tettDistribute1].size(); tettDistribute2++)
-            {
-              // cout << map[i][j];
-              Territory t1 = Territory(&map[tettDistribute1][tettDistribute2]);
-              tett1.push_back(&t1);
-            }
-          }
-
-
-
-          player5 = Player(50, namePlayer1, &tett5, &pl1, &hand5, &ol1);
-
-          break;
-        }
-        case 5:
-        {
-          string namePlayer1;
-          cout << "Enter the name of the player:" << endl;
-          cin >> namePlayer1;
-          HandCards hand6 = HandCards();
-          hand6.set_vec_hand_cards(aDeck.draw());
-          hand6.set_vec_hand_cards(aDeck.draw());
-          
-
-          for (; tettDistribute1 < map.size() / numPlayer; tettDistribute1++)
-          {
-            for (; tettDistribute2 < map[tettDistribute1].size(); tettDistribute2++)
-            {
-              // cout << map[i][j];
-              Territory t1 = Territory(&map[tettDistribute1][tettDistribute2]);
-              tett6.push_back(&t1);
-            }
-          }
-
-          player6 = Player(50, namePlayer1, &tett6, &pl1, &hand6, &ol1);
-
-          break;
-        }
         }
       }
+
+      cout << endl;
+      break;
     }
-    break;
     }
   }
 }
@@ -588,8 +445,9 @@ void GameEngine::startupPhase()
 int main()
 {
 
-    GameEngine * game = new GameEngine();
-    game->startupPhase();   
+  GameEngine *game = new GameEngine();
 
-    return 0;
+  game->startupPhase(game->player);
+  game->~GameEngine();
+  return 0;
 }
