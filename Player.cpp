@@ -114,7 +114,7 @@ void Player::issueOrder() {
 
         cout << name << "Is now issuing an order from a car in their hand: ";
 
-        if (*(*hand[0].card_type) == " Airlift"){
+        if (hand->arrHand[0] == " Airlift"){
 
             orders->add(new Airlift);
             //*hand[0].delete
@@ -122,7 +122,7 @@ void Player::issueOrder() {
 
         }
 
-        else if (*(*hand[0].card_type) == "Bomb"){
+        else if (hand->arrHand[0] == "Bomb"){
 
             orders->add(new Bomb);
             //*hand[0].delete
@@ -130,7 +130,7 @@ void Player::issueOrder() {
 
         }
 
-        else if (*(*hand[0].card_type) == "Blockade"){
+        else if (hand->arrHand[0] == "Blockade"){
 
             orders->add(new Blockade);
             //*hand[0].delete
@@ -138,7 +138,7 @@ void Player::issueOrder() {
 
         }
 
-        else if (*(*hand[0].card_type) == "Negotiate"){
+        else if (hand->arrHand[0] == "Negotiate"){
 
             orders->add(new Negotiate);
             //*hand[0].delete

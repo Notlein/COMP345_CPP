@@ -263,6 +263,7 @@ void Hand::return_to_Deck(Deck *deck, string s)
   dynamicDeckSize++;
 }
 
+
 // A freefunction that tests the methods.
 // void testCards()
 // {

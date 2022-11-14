@@ -75,6 +75,8 @@ public:
   void return_to_Deck(Deck *deck, string s);
 
   string arrHand[sizeDeck];
+
+  Card pop_card();
 };
 
 void testCards();

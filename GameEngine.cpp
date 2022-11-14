@@ -7,6 +7,7 @@
 #include <vector>
 #include <math.h>       /* floor */
 #include "Player.h"
+#include "Orders.h"
 using namespace std;
 
 vector<Player *> players;
@@ -235,13 +236,13 @@ int executeOrdersPhase(){
     for(Player * player : players){
     
       OrdersList* playerOrderList = player->get_orders();
-      vector<Order *>* playersOrders = playerOrderList->get_OrderList(); 
+      vector<Order *> playersOrders = playerOrderList->get_OrderList(); 
 
-      if(playersOrders[0] != nullptr){
+      if(!playersOrders.empty()){
 
         hasOrder = true;
-        playersOrders[0].execute;
-        playersOrders.erase(0);
+        playersOrders[0]->execute();
+        playersOrders.erase(playersOrders.begin());
 
       }
     
@@ -273,10 +274,10 @@ void mainGameLoop(){
     //if a player has no more territories to defend by the end of the turn, they are eliminated from the game:
     for(int i = 0; i < players.size(); i++){
 
-      if (*(players[i])->toDefend().empty()){
+      if (players[i]->toDefend()->empty()){
 
-        cout << "Player " << player->getName() << " has no more territories at the end of this turn, so they are eliminated.";
-        *players.erase(player);
+        cout << "Player " << players[i]->getName() << " has no more territories at the end of this turn, so they are eliminated.";
+        *players.erase(players.begin() + i);
 
       }
 
