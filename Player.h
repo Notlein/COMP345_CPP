@@ -36,6 +36,8 @@ public:
     bool get_received_card();
     void set_reinforcement(int i);
     int get_reinforcement();
+    void add_territory(Territory * t);
+    // void remove_territory(Territory * t);
     // void player_draw_card();
 
 private:

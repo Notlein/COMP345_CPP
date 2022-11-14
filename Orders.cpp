@@ -181,14 +181,17 @@ void Advance::execute() {
 			}
 			// defender's army units are eliminated, the attacker captures the territory
 			if (target->getNbArmies() == 0) {
+				target->getOwner()->remove_territory(target);
 				target->setOwner(owner);
 				target->setNbArmies(my_num_army);
+				owner->add_territory(target);
+				
 				// draw a card if player haven't receive card for thisturn
 
 				effect = "attacking player " + source->getOwner()->getName() + " won the attack, with " + to_string(my_num_army) + " armies remaining.";
 				if (!target->getOwner()->get_received_card()) {
 					target->getOwner()->set_received_card(true);
-					// owner->player_draw_card();
+					
 					effect += "player will receive a card at the end of his turn";
 
 				} else {
@@ -196,7 +199,7 @@ void Advance::execute() {
 				}
 				cout << effect << endl;
 			} else {
-				effect = "defending player " + target->getOwner()->getName() + " won the attack, with " + to_string(target->getNbArmies()) <+ " armies remaining";
+				effect = "defending player " + target->getOwner()->getName() + " won the attack, with " + to_string(target->getNbArmies()) + " armies remaining";
 				cout << effect << endl;
 			}
 			if_executed = true;
@@ -257,7 +260,7 @@ void Airlift::execute() {
 		source->setNbArmies(source->getNbArmies() - my_num_army);
 		target->setNbArmies(target->getNbArmies() + my_num_army);
 		if_executed = true;
-		effect = "moved " + to_string(my_num_army) + " armies from source territory " + source->getName() + " to target territory " + source->getName();
+		effect = "moved " + to_string(my_num_army) + " armies from source territory " + source->getName() + " to target territory " + target->getName();
 		cout << effect << endl;
 	} 
 }

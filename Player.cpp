@@ -161,3 +161,13 @@ int Player::get_reinforcement(){
 // void Player::player_draw_card() {
 //     string c = this->hand->draw();
 // }
+
+void Player::add_territory(Territory * t) {
+    this->territories->push_back(t);
+}
+
+
+
+// void Player::remove_territory(Territory * t) {
+//     territories->erase(remove(territories->begin(), territories->end(), t), territories->end());
+// }

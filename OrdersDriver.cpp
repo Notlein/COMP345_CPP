@@ -95,12 +95,16 @@ int main() {
      // -------------- set up neccessary objects for testing ---------------
   
     Continent c1 = testloadMaps();
-    // t1 and t2 are adjecent 
-    // t1 and t3 are not adjacent
+    // t1 and t2 are adjacent 
+    // t1 and t5 are adjacent
+    // the rest are not adjacent
     Territory t1 = c1.territories->at(0); //Genda
     Territory t2 = c1.territories->at(3); //Gordonville
     Territory t3 = c1.territories->at(2); //Mirabel
-    Territory t4 = c1.territories->at(11); 
+    Territory t4 = c1.territories->at(11); //St-Joseph Du Lac
+    Territory t5 = c1.territories->at(1); //St-Colomban
+
+ 
 
     vector<Territory *> t11;
     t11.push_back(&t1);
@@ -109,6 +113,7 @@ int main() {
     t22.push_back(&t2);
     t22.push_back(&t3);
     t22.push_back(&t4);
+    t22.push_back(&t5);
 
     Hand hand1 = Hand();
     Hand hand2 = Hand();
@@ -127,6 +132,7 @@ int main() {
     t2.setOwner(&player2);
     t3.setOwner(&player2);
     t4.setOwner(&player2);
+    t5.setOwner(&player2);
 
     cout << player1 << endl;
     cout << player2 << endl;
@@ -138,10 +144,21 @@ int main() {
     cout << d1 << endl;
     // valid case:  selected number of army units is added to the number of army units on that territory
     cout << t1 << endl;
-    Deploy d2 = Deploy(&player1, 5, &t1);	
+    Deploy d2 = Deploy(&player1, 25, &t1);	
     d2.execute();
     cout << d2 << endl;
     cout << t1 << endl;
+
+    //deploy amies to all territory for the following tests
+    Deploy d3 = Deploy(&player2,10,&t2);
+    d3.execute();
+    Deploy d4 = Deploy(&player2,10,&t3);
+    d4.execute();
+    Deploy d5 = Deploy(&player2,10,&t4);
+    d5.execute();
+    Deploy d6 = Deploy(&player2,10,&t5);
+    d6.execute();
+
 
     cout << "testing advance -------------------------------" << endl;
     //invalid case: source territory does not belong to the player that issued the order
@@ -154,32 +171,36 @@ int main() {
     cout << a2 << endl;
     //valid case: source and target territory both belong to the player that issued the order, the army units are moved from the source to the target territory.
     cout << t3 << endl;
+
+
     Advance a3 = Advance(&player2, 5, &t3, &t2);
     a3.execute();
     cout << a3 << endl;
     cout << t3 << endl;
     // valid case: attack
     cout << t2 << endl;
-    Advance a4 = Advance(&player1, 5, &t1, &t2);
+    Advance a4 = Advance(&player1, 25, &t1, &t2);
     a4.execute();
     cout << a4 << endl;
     cout << t2 << endl;
+    cout << player1 << endl;
+    cout << player2 << endl;
 
     cout << "testing airlift -------------------------------" << endl;
     //invalid case: source or target territory does not belong to the player that issued the order
-    Airlift al1 = Airlift(&player1, 5, &t1, &t2);
+    Airlift al1 = Airlift(&player1, 5, &t1, &t3);
     al1.execute();
     cout << al1 << endl;
-    Airlift al2 = Airlift(&player1, 5, &t2, &t1);
+    Airlift al2 = Airlift(&player1, 5, &t3, &t1);
     al2.execute();
     cout << al2 << endl;
     //valid case:  selected number of army units is moved from the source to the target territory
-    Airlift al3 = Airlift(&player2, 5, &t3, &t2);
-    cout << t2 << endl;
+    Airlift al3 = Airlift(&player2, 5, &t3, &t4);
+    cout << t4 << endl;
     cout << t3 << endl;
     al3.execute();
     cout << al3 << endl;
-    cout << t2 << endl;
+    cout << t4 << endl;
     cout << t3 << endl;
 
     cout << "testing bomb -------------------------------" << endl;
@@ -192,11 +213,11 @@ int main() {
     b2.execute();
     cout << b2 << endl;
     //valid case: half of the army units are removed from this territory.
-    Bomb b3 = Bomb(&player1, &t2);	
-    cout << t2 << endl;
+    Bomb b3 = Bomb(&player1, &t5);	
+    cout << t5 << endl;
     b3.execute();
     cout << b3 << endl;
-    cout << t2 << endl;
+    cout << t5 << endl;
 
     cout << "testing blockade -------------------------------" << endl;
     //invalid case:  target territory belongs to an enemy player
@@ -204,11 +225,12 @@ int main() {
     bl1.execute();
     cout << bl1 << endl;
     // valid case:  the number of army units on the territory is doubled and the ownership of the territory is transferred to the Neutral player
-    Blockade bl2 = Blockade(&player2, &t3);
-    cout << t3 << endl;
+    Blockade bl2 = Blockade(&player2, &t4);
+    cout << t4 << endl;
     bl2.execute();
     cout << bl2 << endl;
-    cout << t3 << endl;
+    cout << t4 << endl;
+    cout << player2 << endl;
 
     
     cout << "testing negotiate -------------------------------" << endl;
@@ -220,7 +242,7 @@ int main() {
     Negotiate n2 = Negotiate(&player1, &player2);
     n2.execute();
     cout << n2 << endl;
-    Advance a5 = Advance(&player1, 5, &t1, &t4);
+    Advance a5 = Advance(&player1, 5, &t1, &t5);
     a5.execute();
     cout << a5 << endl;
 
