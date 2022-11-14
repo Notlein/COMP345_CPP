@@ -97,8 +97,68 @@ vector<Territory*> * Player::toDefend() {
 }
 
 void Player::issueOrder() {
-    // Order *o = new Order();
-    // orders->add(o);
+
+    //for each turn, each player will deploy all of their available reinforcements
+
+    while(reinforcement > 0 ){
+
+        orders.push_back(new Deploy);
+        reinforcement--;
+
+    }
+
+    cout << name << "Has no more reinforcements to deploy\n";
+    //for each turn, each player issues an order from one card in thier hand, if their hand is not empty.
+
+    if(!*hand.empty()){
+
+        cout << *name << "Is now issuing an order from a car in their hand: ";
+
+        if (*(*hand[0].card_type) == "Airlift"){
+
+            orders.push_back(new Airlift);
+            //*hand[0].delete
+            cout << *name << "Airlift card\n";
+
+        }
+
+        else if (*(*hand[0].card_type) == "Bomb"){
+
+            orders.push_back(new Bomb);
+            //*hand[0].delete
+            cout << *name << "Bomb card\n";
+
+        }
+
+        else if (*(*hand[0].card_type) == "Blockade"){
+
+            orders.push_back(new Blockade);
+            //*hand[0].delete
+            cout << *name << "Blockade card\n";
+
+        }
+
+        else if (*(*hand[0].card_type) == "Negotiate"){
+
+            orders.push_back(new Negotiate);
+            //*hand[0].delete
+            cout << *name << "Negotiate card\n";
+
+        }
+
+        else{
+
+            cout <<"There is an invalid card in the deck\n";
+
+        }
+    }
+
+    //Finally, for each turn, each player issues one advance order.
+
+    cout << *name << "Is now issuing an advance order\n\n";
+    orders.push_back(new Advance);
+
+    cout << *name <<"'s issue orders phase is complete for this turn\n\n========\n\n";
 
 }
 

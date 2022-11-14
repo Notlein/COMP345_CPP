@@ -4,3 +4,4 @@
 using namespace std;
 
     void testGameStates();
+    void testMainGameLoop();

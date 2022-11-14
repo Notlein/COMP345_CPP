@@ -30,3 +30,13 @@ void testGameStates() {
         last = input;
     }
 }
+
+void testMainGameLoop(){
+
+    //This method calls the mainGameLoop method on a game engine object.
+    //The mainGameLoop and its constituent methods for the three phases all contain console outputs that demonstrate the performance 6 features we are asked to demonstrate.
+    
+    //call mainGameLoop on an object of gameengine
+
+}
+
