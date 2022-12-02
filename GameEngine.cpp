@@ -521,18 +521,18 @@ int reinforcementPhase()
   return 0;
 }
 
-// int issueOrdersPhase(){
+ int issueOrdersPhase(){
 
-//   //for each turn, each player issues a certain number of deploy order, an order for each card they currently have, as well as one advance order.
-//   //Please see the implementation in Player::issueOrder()
+   //for each turn, each player issues a certain number of deploy order, an order for each card they currently have, as well as one advance order.
+   //Please see the implementation in Player::issueOrder()
 
-//   for(Player * player : players){
+   for(Player * player : players){
 
-//     player->issueOrder();
+     player->issueOrder();
 
-//   }
-//   return 0;
-// }
+   }
+   return 0;
+ }
 
 int executeOrdersPhase()
 {
@@ -568,29 +568,29 @@ int executeOrdersPhase()
   return 0;
 }
 
-// void mainGameLoop(){
+void mainGameLoop(){
 
-//   while(players.size() > 1){
+   while(players.size() > 1){
 
-//     cout << "\n================";
-//     cout << "\nNEW TURN";
-//     cout << "\n================\n\n";
+     cout << "\n================";
+     cout << "\nNEW TURN";
+     cout << "\n================\n\n";
 
-//     reinforcementPhase();
-//     issueOrdersPhase();
-//     executeOrdersPhase();
+     reinforcementPhase();
+     issueOrdersPhase();
+     executeOrdersPhase();
 
-//     //if a player has no more territories to defend by the end of the turn, they are eliminated from the game:
-//     for(int i = 0; i < players.size(); i++){
+     //if a player has no more territories to defend by the end of the turn, they are eliminated from the game:
+     for(int i = 0; i < players.size(); i++){
 
-//       if (players[i]->toDefend()->empty()){
+       if (players[i]->toDefend()->empty()){
 
-//         cout << "Player " << players[i]->getName() << " has no more territories at the end of this turn, so they are eliminated.";
-//         *players.erase(players.begin() + i);
+         cout << "Player " << players[i]->getName() << " has no more territories at the end of this turn, so they are eliminated.";
+         *players.erase(players.begin() + i);
 
-//       }
+       }
 
-//     }
+     }
 
-//   }
-// }
+   }
+ }

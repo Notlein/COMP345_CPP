@@ -41,6 +41,6 @@ void testMainGameLoop()
 
     // call mainGameLoop on an object of gameengine
     GameEngine *testEngine = new GameEngine();
-    // testEngine->mainGameLoop();
+    testEngine->mainGameLoop();
     // comment it out because main game loop function does not exist
 }
