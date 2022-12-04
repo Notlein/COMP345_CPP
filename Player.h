@@ -41,7 +41,7 @@ public:
 private:
     string name;
     int reinforcement;
-    vector<Territory*> *territories;
+    // vector<Territory*> *territories;
     vector<Player*> *noAttack;
     Hand * hand;
     OrdersList * orders;
