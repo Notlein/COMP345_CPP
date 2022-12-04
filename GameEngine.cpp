@@ -18,6 +18,7 @@ GameEngine::GameEngine()
   curr_state = str;
   cout << "State set to " << *str << endl;
   vector<Player *> player;
+  deck = new Deck;
 }
 
 // copy constructor
@@ -528,7 +529,7 @@ int GameEngine::issueOrdersPhase(){
 
   for(Player * current_player : *(this->player)){
 
-    current_player->issueOrder();
+    current_player->issueOrder(deck);
 
   }
   return 0;

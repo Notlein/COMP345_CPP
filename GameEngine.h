@@ -8,6 +8,7 @@ class Player;
 class GameEngine {
 
 private:
+    Deck *deck;
     string *curr_state;
     // setState modifies the value of curr_state
     void setState(string *new_state);
