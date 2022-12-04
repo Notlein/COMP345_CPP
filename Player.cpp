@@ -271,7 +271,8 @@ int Player::get_reinforcement(){
     }
 
     //Finally, for each turn, each player issues one advance order.
-
+    //Idealy we would use toAttack here to make the decision, but it returns a list of strings, because that's how adjacent territories are stored.
+    //We cannot call an advance order on a string
     cout << name << "Is now issuing an advance order\n\n";
     orders->add(new Advance);
 
