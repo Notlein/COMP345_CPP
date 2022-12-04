@@ -70,6 +70,8 @@ public:
 
   void displayNumOfCards();
 
+  int get_numCardsHand();
+
   void displayHandCards();
 
   void play(Deck *deck, string s, int index);

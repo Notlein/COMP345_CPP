@@ -21,7 +21,7 @@ public:
 
     OrdersList* get_orders();
     vector<Territory*> * toDefend();
-    vector<Territory*> * toAttack();
+    vector<string> * toAttack();
     void issueOrder();
 
     // vector<Orders *> getOrderList();

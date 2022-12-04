@@ -35,7 +35,7 @@ public:
     // Reinforcement phase of main game loop:
     int reinforcementPhase();
     // Issue orders phase of main game loop:
-    // int issueOrdersPhase();
+    int issueOrdersPhase();
     // Execute orders phase of main game loop:
     int executeOrdersPhase();
     // Main game loop:

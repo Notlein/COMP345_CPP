@@ -489,17 +489,17 @@ int main()
   return 0;
 }
 
-int reinforcementPhase()
+int GameEngine::reinforcementPhase()
 {
 
-  for (Player *player : players)
+  for (Player *current_player : *(this->player))
   {
 
     // print how many reinforcements the current player has to test:
-    cout << "Player " << player->getName() << " currently has " << player->get_reinforcement() << "reinforcements available at the begining of their turn.\n";
+    cout << "Player " << current_player->getName() << " currently has " << current_player->get_reinforcement() << "reinforcements available at the begining of their turn.\n";
 
     // take count of players territories:
-    int terrCount = player->toDefend()->size();
+    int terrCount = current_player->toDefend()->size();
 
     // divide by 3.0:
     double reinforcementDouble = floor(double(terrCount) / 3.0);
@@ -513,28 +513,28 @@ int reinforcementPhase()
     }
 
     // continued test
-    cout << "Player " << player->getName() << " currently has " << terrCount << "territories, so they will recieve " << reinforcementInt << "reinforcements.\n";
-    cout << "Player " << player->getName() << " currently has " << player->get_reinforcement() << "reinforcements available at the end of the reinforcement phase of their turn.\n\n\n";
+    cout << "Player " << current_player->getName() << " currently has " << terrCount << "territories, so they will recieve " << reinforcementInt << "reinforcements.\n";
+    cout << "Player " << current_player->getName() << " currently has " << current_player->get_reinforcement() << "reinforcements available at the end of the reinforcement phase of their turn.\n\n\n";
 
-    player->set_reinforcement(player->get_reinforcement() + reinforcementInt);
+    current_player->set_reinforcement(current_player->get_reinforcement() + reinforcementInt);
   }
   return 0;
 }
 
-// int issueOrdersPhase(){
+int GameEngine::issueOrdersPhase(){
 
-//   //for each turn, each player issues a certain number of deploy order, an order for each card they currently have, as well as one advance order.
-//   //Please see the implementation in Player::issueOrder()
+  //for each turn, each player issues a certain number of deploy order, an order for each card they currently have, as well as one advance order.
+  //Please see the implementation in Player::issueOrder()
 
-//   for(Player * player : players){
+  for(Player * current_player : *(this->player)){
 
-//     player->issueOrder();
+    current_player->issueOrder();
 
-//   }
-//   return 0;
-// }
+  }
+  return 0;
+}
 
-int executeOrdersPhase()
+int GameEngine::executeOrdersPhase()
 {
 
   // for each turn, each player executes all of the orders they issued in that turn
@@ -544,10 +544,10 @@ int executeOrdersPhase()
   while (!finished)
   {
 
-    for (Player *player : players)
+    for (Player *current_player : *(this->player))
     {
 
-      OrdersList *playerOrderList = player->get_orders();
+      OrdersList *playerOrderList = current_player->get_orders();
       vector<Order *> playersOrders = playerOrderList->get_OrderList();
 
       if (!playersOrders.empty())
@@ -568,29 +568,34 @@ int executeOrdersPhase()
   return 0;
 }
 
-// void mainGameLoop(){
+int GameEngine::mainGameLoop(){
 
-//   while(players.size() > 1){
+  while(this->player->size() > 1){
 
-//     cout << "\n================";
-//     cout << "\nNEW TURN";
-//     cout << "\n================\n\n";
+    cout << "\n================";
+    cout << "\nNEW TURN";
+    cout << "\n================\n\n";
 
-//     reinforcementPhase();
-//     issueOrdersPhase();
-//     executeOrdersPhase();
+    this->reinforcementPhase();
+    this->issueOrdersPhase();
+    this->executeOrdersPhase();
 
-//     //if a player has no more territories to defend by the end of the turn, they are eliminated from the game:
-//     for(int i = 0; i < players.size(); i++){
+    vector<Player *> players = *(this->player);
 
-//       if (players[i]->toDefend()->empty()){
+    //if a player has no more territories to defend by the end of the turn, they are eliminated from the game:
+    for(int i = 0; i < players.size(); i++){
 
-//         cout << "Player " << players[i]->getName() << " has no more territories at the end of this turn, so they are eliminated.";
-//         *players.erase(players.begin() + i);
+      if (players[i]->toDefend()->empty()){
 
-//       }
+        cout << "Player " << players[i]->getName() << " has no more territories at the end of this turn, so they are eliminated.";
+        *players.erase(players.begin() + i);
 
-//     }
+      }
 
-//   }
-// }
+    }
+
+  }
+
+  return 0;
+
+ }

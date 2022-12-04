@@ -219,6 +219,12 @@ void Hand::displayNumOfCards()
   cout << "Currently has " << numCardsHand << " cards." << endl;
 }
 // use one of the cards in the hand and return it to the deck.`
+
+int Hand::get_numCardsHand(){
+
+  return numCardsHand;
+
+}
 void Hand::play(Deck *deck, string s, int index)
 {
   cout << "Your card is: " << s << endl;

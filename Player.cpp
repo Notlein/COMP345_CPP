@@ -78,8 +78,8 @@ ostream &operator<<(ostream &out, const Player &p) {
     return out;
 }
 
-vector<Territory*>* Player::toAttack(){
-    vector<Territory*>* attackList = new vector<Territory*>();
+//vector<Territory*>* Player::toAttack(){
+    //vector<Territory*>* attackList = new vector<Territory*>();
 	
 	// for (auto t : *this->territories) {
 	// 	for (auto adjt : t->getAdjacentTerritories()) {
@@ -94,11 +94,60 @@ vector<Territory*>* Player::toAttack(){
     //         }
 	//     }
     // }
-    return NULL;
+    //return NULL;
+//}
+
+//vector<Territory*> * Player::toDefend() {
+    //return this->territories;
+//}
+
+vector<Territory*> * Player::toDefend(){
+
+	vector<Territory*> * sortedToDefend =  territories;
+	std::sort(sortedToDefend->begin(), sortedToDefend->end());
+	return sortedToDefend;
+		
 }
 
-vector<Territory*> * Player::toDefend() {
-    return this->territories;
+vector<string> * Player::toAttack(){
+
+	vector<string> * sortedToAttack;
+	for (Territory * territory : *territories){
+
+		for (string adjacent : *(territory->adjTerr)){
+
+			//if(*(adjacent.owner) != this){
+
+				//sortedToAttack->pushBack(adjacent);			
+
+			//}
+
+            bool isEnemy = true;
+
+            for (Territory * territory1 : *territories){
+
+                if (*(territory1->Tname) == adjacent){
+
+                    isEnemy = false;
+                    break;
+
+                }
+
+            }
+
+            if (isEnemy){
+
+                sortedToAttack->push_back(adjacent);
+
+            }
+			
+		}
+
+	}
+
+	std::sort(sortedToAttack->begin(), sortedToAttack->end());
+	return sortedToAttack;
+	
 }
 
 string Player::getName() {
@@ -162,60 +211,67 @@ int Player::get_reinforcement(){
 // }
 
 
-// void Player::issueOrder() {
+ void Player::issueOrder() {
 
-//     //for each turn, each player will deploy all of their available reinforcements
-//     Hand *hand;
-//     while(reinforcement > 0 ){
+     //for each turn, each player will deploy all of their available reinforcements
+     //Hand *hand;
+     while(reinforcement > 0 ){
 
-//         orders -> add(new Deploy);
-//         reinforcement--;
+         orders -> add(new Deploy);
+         reinforcement--;
 
-//     }
+     }
 
-//     cout << name << "Has no more reinforcements to deploy\n";
-//     //for each turn, each player issues an order from one card in thier hand, if their hand is not empty.
+     cout << name << "Has no more reinforcements to deploy\n";
+     //for each turn, each player issues an order from one card in thier hand, if their hand is not empty.
 
-//     if(hand->displayNumOfCards() > 0){
+    if(hand->get_numCardsHand() > 0){
 
-//         cout << name << "Is now issuing an order from a car in their hand: ";
+         cout << name << "Is now issuing an order from a car in their hand: ";
 
-//         if (hand->arrHand[0] == " Airlift"){
+         if (hand->arrHand[0] == " Airlift"){
 
-//             orders->add(new Airlift);
-//             //*hand[0].delete
-//             cout << name << " Airlift card\n";
+             orders->add(new Airlift);
+             //*hand[0].delete
+             cout << name << " Airlift card\n";
 
-//         }
+         }
 
-//         else if (hand->arrHand[0] == "Bomb"){
+         else if (hand->arrHand[0] == "Bomb"){
 
-//             orders->add(new Bomb);
-//             //*hand[0].delete
-//             cout << name << " Bomb card\n";
+             orders->add(new Bomb);
+             //*hand[0].delete
+             cout << name << " Bomb card\n";
 
-//         }
+         }
 
-//         else if (hand->arrHand[0] == "Blockade"){
+         else if (hand->arrHand[0] == "Blockade"){
 
-//             orders->add(new Blockade);
-//             //*hand[0].delete
-//             cout << name << " Blockade card\n";
+             orders->add(new Blockade);
+             //*hand[0].delete
+             cout << name << " Blockade card\n";
 
-//         }
+         }
 
-//         else if (hand->arrHand[0] == "Negotiate"){
+         else if (hand->arrHand[0] == "Negotiate"){
 
-//             orders->add(new Negotiate);
-//             //*hand[0].delete
-//             cout << name << " Negotiate card\n";
+             orders->add(new Negotiate);
+             //*hand[0].delete
+             cout << name << " Negotiate card\n";
 
-//         }
+         }
 
-//         else{
+         else{
 
-//             cout <<"There is an invalid card in the deck\n";
+             cout <<"There is an invalid card in the deck\n";
 
-//         }
-//     }
-// }
+         }
+    }
+
+    //Finally, for each turn, each player issues one advance order.
+
+    cout << name << "Is now issuing an advance order\n\n";
+    orders->add(new Advance);
+
+    cout << name <<"'s issue orders phase is complete for this turn\n\n========\n\n";
+ }
