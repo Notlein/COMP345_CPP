@@ -109,12 +109,12 @@ vector<Territory*> * Player::toDefend(){
 		
 }
 
-vector<Territory*> * Player::toAttack(){
+vector<string> * Player::toAttack(){
 
-	vector<Territory*> * sortedToAttack;
+	vector<string> * sortedToAttack;
 	for (Territory * territory : *territories){
 
-		for (string adjacent : territory->adjTerr*){
+		for (string adjacent : *(territory->adjTerr)){
 
 			//if(*(adjacent.owner) != this){
 
@@ -124,9 +124,9 @@ vector<Territory*> * Player::toAttack(){
 
             bool isEnemy = true;
 
-            for (Territory * territory : *territories){
+            for (Territory * territory1 : *territories){
 
-                if (*(territory->Tname) == adjacent){
+                if (*(territory1->Tname) == adjacent){
 
                     isEnemy = false;
                     break;
@@ -137,7 +137,7 @@ vector<Territory*> * Player::toAttack(){
 
             if (isEnemy){
 
-                sortedToAttack->pushBack(adjacent);
+                sortedToAttack->push_back(adjacent);
 
             }
 			
