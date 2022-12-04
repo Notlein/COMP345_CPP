@@ -211,14 +211,16 @@ int Player::get_reinforcement(){
 // }
 
 
- void Player::issueOrder() {
+ void Player::issueOrder(Deck * deck) {
 
      //for each turn, each player will deploy all of their available reinforcements
      //Hand *hand;
      while(reinforcement > 0 ){
 
-         orders -> add(new Deploy);
-         reinforcement--;
+        cout << name << "Is now issuing a Deploy order, sending an army to their most vulnerable territory using Player::toAttack: " << endl;
+        vector<Territory *>& toDefend = *(this->toDefend());
+        orders -> add(new Deploy(this, 1, toDefend[0]));
+        reinforcement--;
 
      }
 
@@ -227,37 +229,37 @@ int Player::get_reinforcement(){
 
     if(hand->get_numCardsHand() > 0){
 
-         cout << name << "Is now issuing an order from a car in their hand: ";
+         cout << name << "Is now issuing an order from a card in their hand: ";
 
          if (hand->arrHand[0] == " Airlift"){
 
              orders->add(new Airlift);
-             //*hand[0].delete
              cout << name << " Airlift card\n";
+             hand->return_to_Deck(deck, hand->arrHand[0]);
 
          }
 
          else if (hand->arrHand[0] == "Bomb"){
 
              orders->add(new Bomb);
-             //*hand[0].delete
              cout << name << " Bomb card\n";
+             hand->return_to_Deck(deck, hand->arrHand[0]);
 
          }
 
          else if (hand->arrHand[0] == "Blockade"){
 
              orders->add(new Blockade);
-             //*hand[0].delete
              cout << name << " Blockade card\n";
+             hand->return_to_Deck(deck, hand->arrHand[0]);
 
          }
 
          else if (hand->arrHand[0] == "Negotiate"){
 
              orders->add(new Negotiate);
-             //*hand[0].delete
              cout << name << " Negotiate card\n";
+             hand->return_to_Deck(deck, hand->arrHand[0]);
 
          }
 

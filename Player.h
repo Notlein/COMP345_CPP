@@ -22,7 +22,7 @@ public:
     OrdersList* get_orders();
     vector<Territory*> * toDefend();
     vector<string> * toAttack();
-    void issueOrder();
+    void issueOrder(Deck * deck);
 
     // vector<Orders *> getOrderList();
     // void printOrder();
